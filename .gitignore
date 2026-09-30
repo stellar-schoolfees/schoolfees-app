@@ -1,0 +1,26 @@
+# Dependencies and build output
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.tsbuildinfo
+
+# Environment: never commit real values, and never a contract id before deployment
+.env
+.env.local
+.env.*.local
+
+# Stellar CLI and keys material
+.stellar/
+*.key
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
