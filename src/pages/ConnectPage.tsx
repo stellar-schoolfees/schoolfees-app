@@ -14,8 +14,9 @@ export function ConnectPage({ config, wallet }: PageProps) {
 
       <p>
         <strong>schoolfees</strong> records one fee obligation on Stellar&rsquo;s test network and
-        lets families settle it. Payments move straight from the payer&rsquo;s balance to the
-        school&rsquo;s balance: the contract never holds anyone&rsquo;s money.
+        lets families settle it once a contract is deployed for a pilot. Payments move straight
+        from the payer&rsquo;s balance to the school&rsquo;s balance: the contract never holds
+        anyone&rsquo;s money.
       </p>
 
       <WalletBar wallet={wallet} />
@@ -47,6 +48,10 @@ export function ConnectPage({ config, wallet }: PageProps) {
         <h2>What has not happened yet</h2>
         <ul>
           <li>No pilot has happened, and nothing is deployed until a school or centre agrees to try it.</li>
+          <li>
+            This app has never run against a deployed contract or a real wallet, so no flow here has
+            been exercised end to end yet.
+          </li>
           <li>There has been no security review or audit. Do not treat this as safe for real money.</li>
           <li>
             The app does not convert decimal places, does not list fees, and cannot restore an
