@@ -16,9 +16,9 @@ implemented**.
 
 ## Next
 
-- [ ] Push v0 and get CI green on GitHub.
-- [ ] **Blocked on the pilot gate:** the first testnet deployment, run by the maintainer, once a real school or tutorial centre has agreed to try the flow. Then set `VITE_CONTRACT_ID` and record the real id and explorer links in the docs repo.
-- [ ] The first run against a deployed contract: create, read, pay, refund and close one real fee, and fix whatever that reveals. Until this happens every chain-facing line of the app is unproven (see the README).
+- [x] Push v0 and get CI green on GitHub.
+- [ ] **Blocked on the pilot gate:** the first testnet deployment, run by the maintainer, once a real school or tutorial centre has agreed to try the flow. Then set `VITE_CONTRACT_ID` and record the real id and explorer links in the docs repo. This is a maintainer step, so it deliberately has no issue draft.
+- [ ] The first run against a deployed contract: create, read, pay, refund and close one real fee, and fix whatever that reveals. Until this happens every chain-facing line of the app is unproven (see the README) — the repeatable version of this is [draft 04](docs/issue-drafts/04-end-to-end-tests-against-testnet.md).
 
 ## Later (contributor-sized, not v0)
 
@@ -30,10 +30,15 @@ Each has a draft in [docs/issue-drafts](docs/issue-drafts):
 - [ ] End-to-end tests against testnet — [draft](docs/issue-drafts/04-end-to-end-tests-against-testnet.md).
 - [ ] A printable receipt for a payer — [draft](docs/issue-drafts/05-receipt-export.md).
 - [ ] List a school's fees from `FeeCreated` events — [draft](docs/issue-drafts/06-list-school-fees.md).
-- [ ] Component and page render tests, and a screen-reader audit.
-- [ ] Restore an archived fee record (the contract has no restore entrypoint in v0 either).
+- [ ] Component and page render tests, and a screen-reader audit — [draft](docs/issue-drafts/07-component-and-accessibility-tests.md).
+- [ ] Restore an archived fee record (the contract has no restore entrypoint in v0 either) — [draft](docs/issue-drafts/08-restore-archived-fee-record.md).
+- [ ] Translate the interface — [draft](docs/issue-drafts/09-translate-the-interface.md).
 
 ## Explicitly out of scope
 
 Mainnet, any backend or database, analytics or trackers, a TypeScript SDK, and
 any feature the contract does not have.
+
+Reminders or notifications are also out of scope: they need a backend and a
+contact channel this project deliberately does not have, and the app stores no
+contact details (and must not).
