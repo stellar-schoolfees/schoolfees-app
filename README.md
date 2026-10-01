@@ -123,6 +123,12 @@ Read this before trusting the app with anything.
   parsing and formatting, date conversion, opaque reference validation, address
   and fee id validation, fee status rules, `remaining`, explorer links, config
   resolution and the testnet refusal paths, and the full error mapping.
+- Render tests for every component and every page (69 more tests, 154 total)
+  under `happy-dom`, each including an automated axe-core accessibility check
+  that fails on serious violations. Page write paths run against a mocked
+  wallet module and a fake contract client, so no test touches a network or a
+  real wallet. The axe harness proves itself in `src/test/render.test.tsx` by
+  failing on a deliberately broken label.
 - ScVal conversion round-trips against the **real** SDK encoders, including a
   `Fee` struct with the same type hints as the contract's ABI (u64, i128,
   address, bytes, bool).
@@ -139,11 +145,12 @@ Read this before trusting the app with anything.
 - The contract's `status()` return value is read defensively (symbol, single-element
   vec, or object) because unit-variant enums were not verified against a deployed
   contract; an unrecognised value shows as `Unknown` rather than a guess.
-- **Accessibility is built in, not audited**: semantic landmarks, labels, focus
-  styles and `aria-describedby` are used throughout, but no screen-reader or
-  keyboard audit has been done.
-- Only pure logic is unit tested. Components and pages have no render tests, and
-  nothing runs in a browser in CI.
+- **Accessibility is built in and machine-checked, not audited**: semantic
+  landmarks, labels, focus styles and `aria-describedby` are used throughout,
+  and an axe-core check now runs over every rendered component and page — but
+  axe is a floor, not an audit: no screen-reader or keyboard audit has been
+  done, and colour contrast is verified against the design tokens rather than
+  rendered styles.
 
 The first real evidence will come from a testnet pilot. Until then, treat the
 chain-facing code as unverified.
