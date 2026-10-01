@@ -17,11 +17,18 @@ export function TransactionResult({
   const url = explorerTxUrl(explorerBaseUrl, hash);
 
   return (
-    <div className="notice notice-ok">
+    // A11Y-06: the hash is the receipt — announce the result politely instead
+    // of inserting silent content after the submit button.
+    <div className="notice notice-ok" role="status">
       <p className="notice-title">{label}</p>
       <p className="mono">
         <span className="hint">Hash: </span>
-        <span title={hash}>{shorten(hash, 10)}</span>
+        <span title={hash}>
+          {shorten(hash, 10)}
+          {/* The full hash is the receipt; screen-reader and touch users
+              cannot reach a title attribute, so expose it as hidden text. */}
+          <span className="sr-only"> Full hash: {hash}</span>
+        </span>
       </p>
       <p>
         <a href={url} target="_blank" rel="noreferrer noopener">

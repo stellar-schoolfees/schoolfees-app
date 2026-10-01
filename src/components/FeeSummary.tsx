@@ -54,6 +54,9 @@ export function FeeSummary({
           <dt>School</dt>
           <dd className="mono" title={fee.school}>
             {shorten(fee.school, 8)}
+            {/* Full values stay available to assistive tech, not just to a
+                hover tooltip (audit A11Y-05). */}
+            <span className="sr-only"> Full address: {fee.school}</span>
           </dd>
         </div>
         <div>
@@ -65,6 +68,7 @@ export function FeeSummary({
               rel="noreferrer noopener"
             >
               {shorten(fee.token, 8)}
+              <span className="sr-only"> Full address: {fee.token}</span>
             </a>
           </dd>
         </div>
@@ -72,6 +76,7 @@ export function FeeSummary({
           <dt>Reference</dt>
           <dd className="mono" title={bytesToHex(fee.reference)}>
             {formatReference(bytesToHex(fee.reference))}
+            <span className="sr-only"> Full reference: {bytesToHex(fee.reference)}</span>
           </dd>
         </div>
       </dl>

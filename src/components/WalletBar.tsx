@@ -19,6 +19,9 @@ export function WalletBar({ wallet }: { wallet: WalletController }) {
         <>
           <span className="wallet-address mono" title={wallet.address}>
             {shorten(wallet.address, 6)}
+            {/* The connected address must survive a screen reader, not only a
+                hover tooltip (audit A11Y-05). */}
+            <span className="sr-only"> Full address: {wallet.address}</span>
           </span>
           {wallet.onTestnet === true && <span className="badge tone-paid">testnet</span>}
           {wallet.onTestnet === false && <span className="badge tone-overdue">not testnet</span>}

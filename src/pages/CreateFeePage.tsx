@@ -162,12 +162,12 @@ export function CreateFeePage({ client, config, wallet }: PageProps) {
         <>
           <TransactionResult hash={action.result.result.hash} explorerBaseUrl={config.explorerBaseUrl} />
           {action.result.feeId !== null ? (
-            <div className="notice notice-ok">
+            <div className="notice notice-ok" role="status">
               <p className="notice-title">Fee #{action.result.feeId.toString()} created</p>
               <p>Share that fee id with the payer. It is also in the FeeCreated event.</p>
             </div>
           ) : (
-            <div className="notice">
+            <div className="notice" role="status">
               <p>
                 The transaction succeeded, but this network did not report a return value, so the
                 fee id could not be read here. The FeeCreated event in the explorer has it.
