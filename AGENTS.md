@@ -34,14 +34,21 @@ Rules for any AI agent working in this repository (`schoolfees-app`). Read this 
 ## TypeScript rules
 - Strict mode. No `any` without a comment explaining why.
 - Include `.gitignore` (node_modules/, dist/, .env, .stellar/, *.key), README, CONTRIBUTING.md, ROADMAP.md and CI (`.github/workflows/web.yml`: lint, type-check, build).
-- Small commits with clear messages. Do not rewrite history.
+
+## Commit rules
+
+- One logical change per commit. Never bundle unrelated changes.
+- Never create empty or filler commits.
+- Every commit must pass this repository's checks (lint, type-check, unit tests and the production build).
+- Subject line: 100 characters or fewer, in the imperative mood.
+- Do not rewrite history.
+- Never add a "Generated with Codebuff" trailer or any co-author trailer to commit messages.
 
 ## Safety rules
 - Testnet only. Never mainnet.
 - NEVER read, print, log, commit, or ask for secret keys, seed phrases or `.env` contents.
 - Do NOT deploy, push, change git remotes, create GitHub issues, install tools, run `sudo`, or pipe downloads into a shell. Write scripts and stop; the human runs them.
 - Do not add dependencies without saying why, and check the package (maintainer, recent releases) first.
-- Never add a "Generated with Codebuff" trailer or any co-author trailer to commit messages.
 
 ## Truthfulness and evidence rules
 - Never invent function names, flags, or package APIs. If unsure, read developers.stellar.org or the package docs. If you still cannot verify, write `TODO(verify)` and list it in your final summary.
