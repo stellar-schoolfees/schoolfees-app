@@ -16,13 +16,51 @@ import { isTestnetPassphrase } from './network';
  * transaction (`assertWalletOnTestnet`).
  */
 
+/**
+ * The wallet picker only shows wallets the kit ships as `HOT_WALLET` modules AND
+ * that are Stellar-only. The kit's `ModuleType` enum cannot separate a Stellar
+ * wallet from a multi-chain one — `Bitget`, `Dcent` and `OneKey` are all
+ * `HOT_WALLET` — so the filter is by `productId` against this list instead.
+ *
+ * Non-Stellar / multi-chain modules (`Bitget`, `Dcent`, `OneKey`, `Trezor`,
+ * `MetaMask`, ...) are excluded, which is also what drops most of the NEAR and Solana
+ * transitives that `npm audit` flags (see SEC-01). `Keeper` is Stellar but not
+ * shipped by this kit version, so it is intentionally absent.
+ */
+const STELLAR_WALLET_IDS: ReadonlySet<string> = new Set([
+  'albedo',
+  'freighter',
+  'lobstr',
+  'xbull',
+  'rabet',
+  'hana',
+  'fordefi',
+  'scopuly',
+]);
+
+/**
+ * Local copies of the wallet icons in `public/wallet-icons/`. The wallet kit's
+ * default `productIcon` is a remote URL on `stellar.creit.tech`, which means
+ * opening the picker phones home and leaks the user's IP (see SEC-02). Pointing
+ * the icons at local files removes that request entirely.
+ */
+function localWalletIcons(modules: ReturnType<typeof defaultModules>): void {
+  for (const module of modules) {
+    module.productIcon = `/wallet-icons/${module.productId}.png`;
+  }
+}
+
 let initialised = false;
 
 /** Initialises the kit once. Safe to call from an effect. */
 export function initWallet(): void {
   if (initialised) return;
+  const modules = defaultModules({
+    filterBy: (module) => STELLAR_WALLET_IDS.has(module.productId),
+  });
+  localWalletIcons(modules);
   StellarWalletsKit.init({
-    modules: defaultModules(),
+    modules,
     // Pinned to testnet: the kit will not be asked for any other network.
     network: Networks.TESTNET,
   });
