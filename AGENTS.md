@@ -9,6 +9,39 @@ Rules for any AI agent working in this repository (`schoolfees-app`). Read this 
 
 **Pilot rule:** no schoolfees contract is deployed until a real school or tutorial centre has agreed to try it. Deploying and setting the contract id are the human's steps.
 
+## Source of truth
+
+Read these before changing anything, in this order:
+
+1. `README.md` — what the app does, and its "What is proven vs assumed" section.
+2. `docs/SECURITY.md` — wallet rules, network safety, validation, RPC failure handling,
+   duplicate submission, dependency review.
+3. `docs/TESTING.md` — what is unit tested, and what is **not** tested.
+4. `docs/DESIGN_GUIDELINES.md` — visual direction, tokens, components, and known deviations.
+5. `docs/ACCESSIBILITY.md` — the WCAG 2.2 AA baseline and its honest gaps.
+6. `docs/DEPLOYMENT_CHECKLIST.md` — the release gate, including what is left to the human.
+7. `docs/PRODUCTION_QUALITY.md` — metadata, favicon, bundle, source maps, deferred SEO.
+8. `docs/RESOURCES.md` — every dependency with its licence, and the `npm audit` result.
+9. `docs/contract-errors.md` — the vendored copy of the contract's `ERRORS.md` table.
+10. `ROADMAP.md` and `docs/decisions/` — what is next, and decisions already made.
+
+System-level design lives in the docs repo (`schoolfees-docs/src/architecture.md`); link to
+it, never restate it here. Error wording comes from the contract repo's `ERRORS.md` and is
+never written in this repo.
+
+## Collaboration rules
+
+- **Lead with the result or the next action.** Say what happened or what you need first;
+  detail comes after.
+- **Call out incorrect assumptions plainly.** If a premise in the task is wrong, say so in one
+  sentence and continue with what is true.
+- **Ask before anything destructive, legal, security-related, payment-related or
+  irreversible.** Do not guess on a high-stakes decision: record it as a question for the
+  human and carry on with the rest.
+- **Honest completion report.** Before saying done, state what you tested, what you did **not**
+  test, and any defect you found. "It works" without evidence is a liability, not a signal.
+- Do not invent requirements, and do not add scope beyond the task.
+
 ## Toolchain (re-check on developers.stellar.org before relying on any version)
 - Node 24 locally. Package manager: use whatever the scaffold uses; do not mix managers.
 - Preferred start: the current Scaffold Stellar init flow. If it is not available as documented, fall back to Vite + React + TypeScript with the Stellar SDK and Stellar Wallets Kit, and record the decision in `docs/decisions/`.
@@ -40,7 +73,14 @@ Rules for any AI agent working in this repository (`schoolfees-app`). Read this 
 - One logical change per commit. Never bundle unrelated changes.
 - Never create empty or filler commits.
 - Every commit must pass this repository's checks (lint, type-check, unit tests and the production build).
-- Subject line: 100 characters or fewer, in the imperative mood.
+- Conventional format: `type: imperative summary`, where `type` is one of `feat`, `fix`,
+  `docs`, `chore`, `test`, `refactor`, `style` or `perf`.
+- Subject line: 72 characters or fewer, in the imperative mood. No trailing period.
+- Stage files by explicit name. **Never** `git add -A` or `git add .`.
+- Run `git status` and read the staged diff (`git diff --staged`) before every commit. Do not
+  commit a file you did not intend to change.
+- Never commit `.env` contents, key material, a secret, or a secret-looking string. If you see
+  one in a diff, stop and say so.
 - Do not rewrite history.
 - Never add a "Generated with Codebuff" trailer or any co-author trailer to commit messages.
 

@@ -57,9 +57,32 @@ CI runs exactly these four. A change that breaks any of them is not ready.
 
 ## Commits
 
-- Small commits with clear messages.
-- No `Generated with ...` or co-author trailers.
-- Do not rewrite history, change remotes, or push on someone else's behalf.
+Before every commit:
+
+```bash
+git status --porcelain         # know exactly which files changed
+git diff --staged             # read what you are about to commit
+```
+
+- **Stage files by name** — `git add src/lib/fee.ts docs/TESTING.md`, never
+  `git add -A`. Broad staging is how unrelated changes and secrets get into
+  history.
+- **Read the staged diff line by line.** If a hunk is not yours, leave it out.
+- **Secret scan.** No API keys, tokens, passwords, `.env` contents or key
+  material — not in the diff, not in a test fixture. This app never handles a
+  secret key, so nothing of the sort belongs in a commit. If you see one, say so
+  instead of committing it.
+- **No debug or generated output:** no `console.log`, no `debugger`, no
+  `dist/`, no `coverage/`, no `.env.local`.
+- **Conventional commit message:** `type: imperative summary`, 72 characters or
+  fewer, where `type` is `feat`, `fix`, `docs`, `chore`, `test`, `refactor`,
+  `style` or `perf`. Good: `fix: refuse a fee id of zero`. Bad: `update stuff`,
+  `wip`.
+- **One logical change per commit.** Never bundle unrelated changes, and never
+  create empty or filler commits. Run lint, type-check, tests and the build
+  **before** committing, not after.
+- No `Generated with ...` or co-author trailers. Do not rewrite history, change
+  remotes, or push on someone else's behalf.
 
 ## Ideas and unimplemented work
 
