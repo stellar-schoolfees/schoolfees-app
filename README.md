@@ -41,14 +41,12 @@ Contract functions are called exactly as named in `src/lib.rs` in
   explorer link**.
 - **No analytics, no trackers, no third-party scripts, no backend.** The app
   itself sends nothing anywhere except to the Stellar RPC endpoint from `.env`.
-  One measured caveat, added 2026-10-01: **opening the wallet picker loads
-  wallet icons from third-party hosts** — `https://stellar.creit.tech/wallet-icons/…`
-  for most entries, plus `https://scopuly.com` and `https://uni.onekey-asset.com`
-  for two of them — because the wallet kit renders a remote icon per module. A
-  page load makes no such request. See
-  [docs/SECURITY.md](docs/SECURITY.md) for exactly what is fetched and when, and
-  [draft 15](docs/issue-drafts/15-correct-the-outbound-request-claim.md) for the
-  open decision to narrow the module set.
+  A 2026-10-01 audit found that opening the wallet picker used to load wallet
+  icons from third-party hosts; that is fixed: the picker now shows only Stellar
+  wallets and serves local icon files, so **the only outside request the app
+  makes is to the RPC endpoint from `.env`**, both on page load and when the
+  picker opens. See [docs/SECURITY.md](docs/SECURITY.md) for exactly what is
+  fetched and when.
 - The reference field accepts **only a 32-byte opaque value** (64 hex
   characters) and says in plain words that names, phone numbers, emails and
   student or member ids must never be entered.

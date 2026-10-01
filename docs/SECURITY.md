@@ -152,15 +152,16 @@ Verified by reading the source, not assumed:
 - **No analytics, trackers, third-party scripts, cookies or backend.** No
   `console.*` call exists in `src/`, so nothing about a payer is logged either.
 - **One correction to a claim in the README**, found by auditing the production
-  bundle: the built app fetches **remote wallet icons** from
+  bundle: the built app **used to** fetch remote wallet icons from
   `https://stellar.creit.tech/wallet-icons/…` (plus `https://scopuly.com` and
-  `https://uni.onekey-asset.com` for two entries) when the wallet picker is
-  opened, because the kit renders an icon per module. So the README's "no
-  network request other than to the Stellar RPC endpoint" is true of a page load
-  and **not** true once the picker is opened. Reported in
-  `schoolfees-docs/docs/audits/2026-10-01-06-security-review.md`; tracked as
-  [draft 15](issue-drafts/15-correct-the-outbound-request-claim.md). No
-  WalletConnect/Reown code is present in the bundle (grepped: zero matches).
+  `https://uni.onekey-asset.com` for two entries) when the wallet picker was
+  opened, because the kit rendered an icon per module. That is fixed as of
+  2026-10-01: the picker is narrowed to Stellar wallets only and serves local
+  icon files from `public/wallet-icons/`. The README's "no network request
+  other than to the Stellar RPC endpoint" is now true again — on a page load and
+  when the picker opens. No WalletConnect/Reown code is present in the bundle
+  (grepped: zero matches). Reported in
+  `schoolfees-docs/docs/audits/2026-10-01-06-security-review.md`.
 - The full storage and privacy inventory is written for a non-developer reader in
   [`schoolfees-docs/src/legal-compliance.md`](https://github.com/stellar-schoolfees/schoolfees-docs/blob/main/src/legal-compliance.md).
 
