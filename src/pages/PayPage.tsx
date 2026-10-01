@@ -91,6 +91,15 @@ export function PayPage({ client, config, wallet }: PageProps) {
       );
       return { hash: result.hash };
     });
+
+    // Re-read the fee so the summary reflects the payment.
+    if (pay.result !== null) {
+      await load.run(async () => {
+        const fee = await client.getFee(address, loaded.fee.id);
+        const status = await client.getStatus(address, loaded.fee.id);
+        return { fee, status };
+      });
+    }
   }
 
   return (

@@ -90,6 +90,15 @@ export function SchoolActionsPage({ client, config, wallet }: PageProps) {
       );
       return { hash: result.hash };
     });
+
+    // Re-read the fee so the summary reflects the refund.
+    if (refund.result !== null) {
+      await load.run(async () => {
+        const fee = await client.getFee(address, loaded.fee.id);
+        const status = await client.getStatus(address, loaded.fee.id);
+        return { fee, status };
+      });
+    }
   }
 
   async function submitClose() {
@@ -101,6 +110,15 @@ export function SchoolActionsPage({ client, config, wallet }: PageProps) {
       );
       return { hash: result.hash };
     });
+
+    // Re-read the fee so the summary reflects the close.
+    if (close.result !== null) {
+      await load.run(async () => {
+        const fee = await client.getFee(address, loaded.fee.id);
+        const status = await client.getStatus(address, loaded.fee.id);
+        return { fee, status };
+      });
+    }
   }
 
   return (
