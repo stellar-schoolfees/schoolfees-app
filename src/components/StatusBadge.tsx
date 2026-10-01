@@ -12,6 +12,7 @@ export function StatusBadge({ status }: { status: FeeStatus }) {
   return (
     <span className={`badge ${TONE[status]}`} title={describeStatus(status)}>
       {status}
+      <span className="sr-only">: {describeStatus(status)}</span>
     </span>
   );
 }

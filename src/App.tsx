@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { ConfigNotice } from './components/ConfigNotice';
 import { TestnetBanner } from './components/TestnetBanner';
@@ -31,6 +31,13 @@ const NAV: ReadonlyArray<{ readonly id: PageId; readonly label: string }> = [
 export default function App() {
   const wallet = useWallet();
   const [page, setPage] = useState<PageId>('connect');
+  const mainRef = useRef<HTMLElement>(null);
+
+  // Move focus to <main> on every page change so keyboard and screen-reader
+  // users land at the new content instead of the nav button that triggered it.
+  useEffect(() => {
+    mainRef.current?.focus();
+  }, [page]);
 
   const config = configResult.ok ? configResult.config : null;
   const client = useMemo(() => (config === null ? null : createContractClient(config)), [config]);
@@ -74,13 +81,17 @@ export default function App() {
         </ul>
       </nav>
 
-      <main id="main">
+      <main id="main" ref={mainRef} tabIndex={-1}>
         {page === 'connect' && <ConnectPage {...pageProps} />}
         {page === 'create' && <CreateFeePage {...pageProps} />}
         {page === 'lookup' && <LookupFeePage {...pageProps} />}
         {page === 'pay' && <PayPage {...pageProps} />}
         {page === 'school' && <SchoolActionsPage {...pageProps} />}
       </main>
+
+      <span role="status" aria-live="polite" className="sr-only">
+        {NAV.find((item) => item.id === page)?.label}
+      </span>
 
       <footer>
         <p className="hint">
