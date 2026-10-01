@@ -154,10 +154,6 @@ export function describeContractError(error: unknown): MappedError {
   return { message: GENERIC_ERROR_MESSAGE };
 }
 
-/** Convenience wrapper when only the message is needed. */
-export function mapContractError(error: unknown): string {
-  return describeContractError(error).message;
-}
 
 export interface ErrorTableRow {
   readonly code: number;
