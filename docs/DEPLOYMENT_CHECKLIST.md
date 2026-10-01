@@ -26,7 +26,7 @@ stops.
 - [ ] `npm ci` from the committed lockfile — never a fresh resolve for a release.
 - [ ] `npm run lint` — 0 errors, 0 warnings.
 - [ ] `npm run typecheck` — clean.
-- [ ] `npm test` — 9 files, 85 tests passing locally (84 in CI; the cross-repo
+- [ ] `npm test` — 24 files, 154 tests passing locally (153 in CI; the cross-repo
       `ERRORS.md` comparison skips there).
 - [ ] `npm run build` — succeeds. **The ~1 MB initial chunk warning is known and
       accepted** ([draft 02](issue-drafts/02-code-split-wallet-kit.md)); do not

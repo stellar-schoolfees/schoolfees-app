@@ -27,12 +27,12 @@ and any visual-regression tooling.
 
 ## Acceptance criteria
 
-- [ ] A rendering test environment is configured and `npm test` runs both the existing pure tests and the new render tests.
-- [ ] Every component in `src/components/` has at least one test, and each of the five pages in `src/pages/` has at least a render test.
-- [ ] An automated accessibility check runs over the rendered pages and fails on serious violations.
-- [ ] Tests use fake addresses and synthetic references only — no personal data, and no real contract ids or hashes.
-- [ ] CI still runs `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, and no test touches the network.
-- [ ] The README's "proven vs assumed" section is updated to say what is now tested, and the accessibility line is corrected to match what the automated check really covers.
+- [x] A rendering test environment is configured and `npm test` runs both the existing pure tests and the new render tests.
+- [x] Every component in `src/components/` has at least one test, and each of the five pages in `src/pages/` has at least a render test.
+- [x] An automated accessibility check runs over the rendered pages and fails on serious violations.
+- [x] Tests use fake addresses and synthetic references only — no personal data, and no real contract ids or hashes.
+- [x] CI still runs `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, and no test touches the network.
+- [x] The README's "proven vs assumed" section is updated to say what is now tested, and the accessibility line is corrected to match what the automated check really covers.
 
 ## Where to start
 
