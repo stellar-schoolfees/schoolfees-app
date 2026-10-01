@@ -11,6 +11,43 @@ import {
   u64ToScVal,
 } from './scval';
 
+const RPC_TIMEOUT_MS = 15_000;
+const RPC_MAX_RETRIES = 3;
+const RPC_BACKOFF_BASE_MS = 500;
+
+/**
+ * Bounds a single RPC attempt: rejects if `promise` doesn't settle within
+ * `ms`. The v17 SDK methods don't accept an `AbortSignal`, so the original
+ * promise is left to settle silently in the background.
+ */
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout>;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error('the network timed out. Please try again.')), ms);
+  });
+  return Promise.race([promise.finally(() => clearTimeout(timer)), timeout]);
+}
+
+/**
+ * Retries an RPC call with exponential backoff, bounded by RPC_MAX_RETRIES.
+ * Only transient failures (timeouts, connection drops) trigger a retry —
+ * contract errors arrive as structured results, not thrown errors.
+ */
+async function retryRpc<T>(fn: () => Promise<T>): Promise<T> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= RPC_MAX_RETRIES; attempt++) {
+    try {
+      return await withTimeout(fn(), RPC_TIMEOUT_MS);
+    } catch (err) {
+      lastError = err;
+      if (attempt < RPC_MAX_RETRIES) {
+        await new Promise((resolve) => setTimeout(resolve, RPC_BACKOFF_BASE_MS * 2 ** attempt));
+      }
+    }
+  }
+  throw lastError;
+}
+
 /**
  * Talks to the deployed `schoolfees` contract over Stellar RPC.
  *
@@ -97,7 +134,7 @@ export function createContractClient(config: AppConfig): ContractClient {
    * secret key of its own.
    */
   async function buildTransaction(source: string, method: string, args: xdr.ScVal[]) {
-    const account = await server.getAccount(source);
+    const account = await retryRpc(() => server.getAccount(source));
     return new TransactionBuilder(account, {
       fee: BASE_FEE,
       networkPassphrase: config.passphrase,
@@ -114,7 +151,7 @@ export function createContractClient(config: AppConfig): ContractClient {
    */
   async function assemble(source: string, method: string, args: xdr.ScVal[]): Promise<string> {
     const tx = await buildTransaction(source, method, args);
-    const simulation = await server.simulateTransaction(tx);
+    const simulation = await retryRpc(() => server.simulateTransaction(tx));
 
     if (rpc.Api.isSimulationRestore(simulation)) {
       // A record archived after nobody touched it for long enough. v0 has no
@@ -130,7 +167,7 @@ export function createContractClient(config: AppConfig): ContractClient {
   /** Simulates a read-only call and returns the raw return value. */
   async function read(source: string, method: string, args: xdr.ScVal[]): Promise<xdr.ScVal> {
     const tx = await buildTransaction(source, method, args);
-    const simulation = await server.simulateTransaction(tx);
+    const simulation = await retryRpc(() => server.simulateTransaction(tx));
 
     if (rpc.Api.isSimulationRestore(simulation)) {
       throw new ContractCallError(ARCHIVED_MESSAGE);
@@ -202,7 +239,7 @@ export function createContractClient(config: AppConfig): ContractClient {
         throw new ContractCallError('the network is busy. Please try again in a moment.');
       }
 
-      const result = await server.pollTransaction(sent.hash);
+      const result = await retryRpc(() => server.pollTransaction(sent.hash));
       if (result.status === rpc.Api.GetTransactionStatus.SUCCESS) {
         return result.returnValue === undefined
           ? { hash: sent.hash }
