@@ -39,9 +39,16 @@ Contract functions are called exactly as named in `src/lib.rs` in
   or seed phrase.** It only ever sees a public address and a signed XDR.
 - Every action that produces a transaction shows the **transaction hash and an
   explorer link**.
-- **No analytics, no trackers, no third-party scripts, no backend.** The built
-  page makes no network request other than to the Stellar RPC endpoint from
-  `.env`.
+- **No analytics, no trackers, no third-party scripts, no backend.** The app
+  itself sends nothing anywhere except to the Stellar RPC endpoint from `.env`.
+  One measured caveat, added 2026-10-01: **opening the wallet picker loads
+  wallet icons from third-party hosts** — `https://stellar.creit.tech/wallet-icons/…`
+  for most entries, plus `https://scopuly.com` and `https://uni.onekey-asset.com`
+  for two of them — because the wallet kit renders a remote icon per module. A
+  page load makes no such request. See
+  [docs/SECURITY.md](docs/SECURITY.md) for exactly what is fetched and when, and
+  [draft 15](docs/issue-drafts/15-correct-the-outbound-request-claim.md) for the
+  open decision to narrow the module set.
 - The reference field accepts **only a 32-byte opaque value** (64 hex
   characters) and says in plain words that names, phone numbers, emails and
   student or member ids must never be entered.
@@ -156,6 +163,15 @@ blocked until a real school or tutorial centre has agreed to a pilot.
   Vite + React + TypeScript instead of Scaffold Stellar, with the versions used.
 - [ROADMAP.md](ROADMAP.md) — what is next, and what is deliberately not built.
 - [docs/issue-drafts](docs/issue-drafts/README.md) — the same gaps as drafts.
+- The engineering standards this repo is held to (Build Arsenal crypto profile +
+  Flowtick), and the audits run against it on 2026-10-01:
+  [SECURITY](docs/SECURITY.md), [TESTING](docs/TESTING.md),
+  [DESIGN_GUIDELINES](docs/DESIGN_GUIDELINES.md),
+  [ACCESSIBILITY](docs/ACCESSIBILITY.md),
+  [DEPLOYMENT_CHECKLIST](docs/DEPLOYMENT_CHECKLIST.md),
+  [PRODUCTION_QUALITY](docs/PRODUCTION_QUALITY.md),
+  [RESOURCES](docs/RESOURCES.md). The across-repo gap map and audit reports live
+  in `schoolfees-docs/docs/`.
 
 ## Notes
 
