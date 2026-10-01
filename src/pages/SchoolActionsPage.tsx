@@ -79,7 +79,7 @@ export function SchoolActionsPage({ client, config, wallet }: PageProps) {
     setAmountError(amountCheck.ok ? null : amountCheck.message);
     if (!payerCheck.ok || !amountCheck.ok) return;
 
-    await refund.run(async () => {
+    const refunded = await refund.run(async () => {
       const result = await runWrite(client, address, config.passphrase, () =>
         client.prepareRefund({
           source: address,
@@ -91,8 +91,9 @@ export function SchoolActionsPage({ client, config, wallet }: PageProps) {
       return { hash: result.hash };
     });
 
-    // Re-read the fee so the summary reflects the refund.
-    if (refund.result !== null) {
+    // Re-read the fee so the summary reflects the refund. The awaited value
+    // is used because `refund.result` is still the pre-run snapshot here.
+    if (refunded !== undefined) {
       await load.run(async () => {
         const fee = await client.getFee(address, loaded.fee.id);
         const status = await client.getStatus(address, loaded.fee.id);
@@ -104,15 +105,16 @@ export function SchoolActionsPage({ client, config, wallet }: PageProps) {
   async function submitClose() {
     if (loaded === null) return;
 
-    await close.run(async () => {
+    const closed = await close.run(async () => {
       const result = await runWrite(client, address, config.passphrase, () =>
         client.prepareCloseFee({ source: address, feeId: loaded.fee.id }),
       );
       return { hash: result.hash };
     });
 
-    // Re-read the fee so the summary reflects the close.
-    if (close.result !== null) {
+    // Re-read the fee so the summary reflects the close. Same awaited-value
+    // pattern as the refund path above.
+    if (closed !== undefined) {
       await load.run(async () => {
         const fee = await client.getFee(address, loaded.fee.id);
         const status = await client.getStatus(address, loaded.fee.id);

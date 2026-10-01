@@ -6,7 +6,7 @@ export interface ActionState<T> {
   readonly busy: boolean;
   readonly error: MappedError | null;
   readonly result: T | null;
-  run: (task: () => Promise<T>) => Promise<void>;
+  run: (task: () => Promise<T>) => Promise<T | undefined>;
   reset: () => void;
 }
 
@@ -28,8 +28,8 @@ export function useAction<T>(): ActionState<T> {
   const busyRef = useRef(false);
   const generationRef = useRef(0);
 
-  const run = useCallback(async (task: () => Promise<T>) => {
-    if (busyRef.current) return;
+  const run = useCallback(async (task: () => Promise<T>): Promise<T | undefined> => {
+    if (busyRef.current) return undefined;
     busyRef.current = true;
     const generation = ++generationRef.current;
     setBusy(true);
@@ -37,11 +37,13 @@ export function useAction<T>(): ActionState<T> {
     try {
       const value = await task();
       if (generation === generationRef.current) setResult(value);
+      return value;
     } catch (thrown) {
       if (generation === generationRef.current) {
         setResult(null);
         setError(describeContractError(thrown));
       }
+      return undefined;
     } finally {
       if (generation === generationRef.current) {
         setBusy(false);

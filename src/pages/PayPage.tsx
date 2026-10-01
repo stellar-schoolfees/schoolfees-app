@@ -80,7 +80,7 @@ export function PayPage({ client, config, wallet }: PageProps) {
     }
     setAmountError(null);
 
-    await pay.run(async () => {
+    const paid = await pay.run(async () => {
       const result = await runWrite(client, address, config.passphrase, () =>
         client.preparePay({
           source: address,
@@ -92,8 +92,10 @@ export function PayPage({ client, config, wallet }: PageProps) {
       return { hash: result.hash };
     });
 
-    // Re-read the fee so the summary reflects the payment.
-    if (pay.result !== null) {
+    // Re-read the fee so the summary reflects the payment. The awaited value
+    // is used because `pay.result` is still the pre-run snapshot in this
+    // closure and would skip the re-read on the first submission.
+    if (paid !== undefined) {
       await load.run(async () => {
         const fee = await client.getFee(address, loaded.fee.id);
         const status = await client.getStatus(address, loaded.fee.id);
