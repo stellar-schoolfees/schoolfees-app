@@ -1,5 +1,10 @@
 # Reads in the app never keep a fee record alive
 
+> **Status (2026-10-02):** Option A chosen — document the limitation. The
+> README and `docs/SECURITY.md` now state it, and the schoolfees-docs book
+> qualifies its archival claims. B is not built; the contract still has no
+> public extend entrypoint.
+
 **Difficulty:** medium
 **Labels:** help wanted, area:app
 
@@ -46,15 +51,15 @@ signing without the user's knowledge.
 
 ## Acceptance criteria
 
-- [ ] A decision (A, B or C) is recorded with its reasoning.
-- [ ] No document in any repository claims that browsing the app keeps a record
+- [x] A decision (A, B or C) is recorded with its reasoning.
+- [x] No document in any repository claims that browsing the app keeps a record
       alive when it does not.
-- [ ] If A is chosen, the sentence in the docs repo's `limitations.md` and
+- [x] If A is chosen, the sentence in the docs repo's `limitations.md` and
       `threat-model.md` that says "every read and write re-extends the entries it
       touches" is qualified for app reads.
 - [ ] If B is chosen, the extra transaction is explicit in the UI, never silent,
       and covered by a new test and by `docs/SECURITY.md`.
-- [ ] `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` all pass.
+- [x] `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` all pass.
 
 ## Where to start
 

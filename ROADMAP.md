@@ -58,7 +58,10 @@ Each has a draft in [docs/issue-drafts](docs/issue-drafts):
 - [ ] Correct the claim that the app makes no request other than to the RPC endpoint — [draft](docs/issue-drafts/15-correct-the-outbound-request-claim.md).
 - [ ] Add a favicon, and decide the social metadata that does not need a domain — [draft](docs/issue-drafts/16-favicon-and-social-metadata.md).
 - [ ] Decide what to do about the wallet kit's dependency advisories — [draft](docs/issue-drafts/17-wallet-kit-dependency-advisories.md).
-- [ ] Decide how to handle the fact that simulated reads never keep a record alive — [draft](docs/issue-drafts/18-reads-do-not-keep-records-alive.md).
+- [x] Decide how to handle the fact that simulated reads never keep a record
+      alive — decided 2026-10-02, option A (document it): the README,
+      `docs/SECURITY.md` and the schoolfees-docs book now say that browsing
+      does not keep a record alive. [Draft](docs/issue-drafts/18-reads-do-not-keep-records-alive.md).
 - [ ] Remove the unused `mapContractError` export — [draft](docs/issue-drafts/19-remove-unused-map-contract-error.md).
 
 ## Explicitly out of scope

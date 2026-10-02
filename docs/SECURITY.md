@@ -184,3 +184,10 @@ Verified by reading the source, not assumed:
   bundle) whose modules we do not review; using a narrower module set is
   [draft 02](issue-drafts/02-code-split-wallet-kit.md) and the audit question in
   the gap map's "Decisions needed from Tim".
+- **Simulated reads do not keep records alive.** The app's read screens call
+  `simulateTransaction`, so the contract's TTL extension during a read is
+  discarded; only submitted transactions persist an extension. The "every
+  read and write re-extends" property holds on-chain but not for app
+  browsing, so a fee nobody writes to can archive while people look at it.
+  Decided 2026-10-02 as option A in
+  [draft 18](issue-drafts/18-reads-do-not-keep-records-alive.md).

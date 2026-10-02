@@ -184,6 +184,12 @@ blocked until a real school or tutorial centre has agreed to a pilot.
   (263 kB gzipped). Splitting it out is [draft 02](docs/issue-drafts/02-code-split-wallet-kit.md).
 - Amounts are whole numbers in the token's smallest unit; the app does not
   convert decimal places yet ([draft 03](docs/issue-drafts/03-token-decimals-and-metadata.md)).
+- Browsing the app does **not** keep a fee record alive. Reads are simulations
+  (`simulateTransaction`), so the TTL extension the contract performs while
+  serving a read is never persisted; only submitted transactions extend TTL.
+  A fee nobody writes to can still archive and show the archived-record
+  refusal. Decided 2026-10-02 as option A in
+  [draft 18](docs/issue-drafts/18-reads-do-not-keep-records-alive.md).
 
 ## License
 
