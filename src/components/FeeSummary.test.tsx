@@ -37,6 +37,15 @@ describe('<FeeSummary />', () => {
     expect(text).toContain('Yes');
   });
 
+  it('explains the status visibly without requiring hover', () => {
+    const view = renderOnly(
+      <FeeSummary fee={feeFactory()} status="Overdue" explorerBaseUrl={EXPLORER} />,
+    );
+    const explanation = view.container.querySelector('h2 + p');
+    expect(explanation?.textContent).toContain('Payments are still accepted.');
+    expect(explanation?.classList.contains('sr-only')).toBe(false);
+  });
+
   it('keeps full school and token addresses in the accessible text', () => {
     // A11Y-05: the full values are sr-only text now, not tooltip-only.
     const fee = feeFactory();

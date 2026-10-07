@@ -1,7 +1,7 @@
 import { formatAmount } from '../lib/amount';
 import { formatDateTime } from '../lib/datetime';
 import { explorerContractUrl, shorten } from '../lib/explorer';
-import { remaining, type FeeRecord, type FeeStatus } from '../lib/fee';
+import { describeStatus, remaining, type FeeRecord, type FeeStatus } from '../lib/fee';
 import { bytesToHex, formatReference } from '../lib/reference';
 import { StatusBadge } from './StatusBadge';
 
@@ -24,6 +24,7 @@ export function FeeSummary({
       <h2 id="fee-summary-heading">
         Fee #{fee.id.toString()} <StatusBadge status={status} />
       </h2>
+      <p className="hint">{describeStatus(status)}</p>
 
       <dl className="summary">
         <div>

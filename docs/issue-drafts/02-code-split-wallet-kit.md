@@ -1,5 +1,9 @@
 # Code-split the wallet kit out of the initial bundle
 
+**Status: implemented locally.** Implemented locally on 2026-10-07: lazy kit import and eight explicit Stellar modules. Real wallet connection/signing remains unverified; see TESTING.md.
+
+The original draft below is historical scope, not current missing behaviour.
+
 **Difficulty:** medium
 **Labels:** help wanted, area:app
 

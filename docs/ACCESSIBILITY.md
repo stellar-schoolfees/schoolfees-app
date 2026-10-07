@@ -7,13 +7,10 @@ the Build Arsenal `ACCESSIBILITY.md` and Flowtick §3 to this app.
 video, no audio, no drag-and-drop, no time limits and no authentication forms,
 so most of WCAG is not applicable; what remains is listed below.
 
-**Status: built in, not audited.** Every item marked "built in" is in the
-markup or the stylesheet and can be inspected; the only real audit so far is a
-static code review
-(`schoolfees-docs/docs/audits/2026-10-01-07-accessibility-review.md`). No
-screen reader, no automated axe/Lighthouse pass and no keyboard-only walkthrough
-has been run, because no browser automation is set up. That is the single
-biggest caveat on this page.
+**Status: semantic markup and automated axe render checks, not an accessibility
+audit.** The 2026-10-07 full suite passed with component/page axe checks in
+happy-dom. No screen-reader audit or real-browser keyboard/zoom walkthrough
+has been run. Automated checks do not establish WCAG conformance.
 
 ## 1. Structure and semantics
 
@@ -48,8 +45,8 @@ biggest caveat on this page.
 | Errors announced | built in | `role="alert"` on field errors, notices and wallet errors |
 | Dynamic status announced without stealing focus | built in | the TESTNET banner is `role="status"` (`aria-live="polite"`); write results are rendered as text after the form |
 | Current page indicated | built in | `aria-current="page"` on the active nav button |
-| **A status badge's meaning is available to a screen reader, not only in a `title`** | **gap** | `StatusBadge` puts `describeStatus(status)` in `title` only; the visible text is the bare word (`Open`, `Paid`, …). A `title` is not reliably announced, and is unreachable by touch and keyboard ([audit 07](../docs/audits/2026-10-01-07-accessibility-review.md)) |
-| **A shortened hash or address is readable in full** | **gap, low** | the full value is in a `title` attribute; a screen reader reads the shortened form. The explorer link provides the full value on the next step, so the impact is small |
+| Status meaning | built in | StatusBadge has screen-reader text; FeeSummary also renders the full explanation visibly |
+| Shortened hash/address readable in full | built in | WalletBar and TransactionResult expose full values as screen-reader text; result is a polite status |
 | Decorative content hidden | n/a | there is no decorative imagery, and no icon font — the app has no images at all |
 | Icon-only buttons labelled | n/a | there are no icon-only buttons |
 
@@ -62,7 +59,7 @@ biggest caveat on this page.
 | Testnet banner text ≥ 4.5:1 | built in — `--banner-ink` on `--banner-bg` (#7c2d12), and the accent tag `--banner-accent` on the same background is about 6.5:1 |
 | Status badge text ≥ 4.5:1 per tone | built in — each badge ink is a dark tone per background |
 | Focus indicator ≥ 3:1 against adjacent colours | built in — `--focus-ring` (#1849a9) on the light surfaces; on the dark banner no focusable element sits |
-| **Placeholder text ≥ 4.5:1** | **gap, low** — `.field input::placeholder` uses `--line-strong` (#98a2b3) on white, about **2.6:1**. Every field has a visible label and the placeholder is only an example, so no information is lost, but it is below the text minimum |
+| Placeholder text | uses the muted token; rendered contrast not audited |
 | Colour never the only signal | built in — statuses carry words, errors carry text |
 | Light and dark | deliberate: `color-scheme: light` and one light palette. A dark theme is not built and is not claimed |
 
@@ -79,7 +76,7 @@ biggest caveat on this page.
 
 | Requirement | Status |
 |---|---|
-| Touch targets ≥ 44×44px (project target; WCAG 2.5.8 AA is 24×24) | **partly** — body buttons are `min-height: 44px` and inputs `min-height: 46px`; **nav pills are `min-height: 40px`** |
+| Touch targets: project 44px minimum | built in CSS for buttons/nav; inputs 46px; browser geometry not audited |
 | No horizontal scrolling at 390px | verified in a browser during development at 390×844; the CSS uses flexible wrapping and `overflow-wrap: anywhere` for long mono values |
 | Text reflows at 320px / 200% zoom | by construction (relative units, no fixed widths beyond `--max-width`); **not explicitly checked** |
 | Orientation is not locked | n/a — the page is not orientation-locked |
@@ -99,13 +96,11 @@ it is repeated in the audit under "what was NOT checked":
    does the skip link work; is the tab order the visual order?
 3. **Does anything announce the page change** when a nav item is clicked
    (expected answer today: no — draft 14).
-4. **Nav pill tap size** at 390px: is 40px comfortable in practice, or should it
-   be 44px?
+4. **Nav pill tap size** at 390px: verify the CSS 44px minimum in the rendered layout.
 5. **Placeholder legibility** on a real phone in daylight.
 6. **Zoom to 200%** at 320px width: any clipping?
 7. **Reduced motion** turned on at the OS level: confirm nothing animates.
-8. **The status badge meaning**: with the screen reader on, does "Paid" alone
-   convey enough, or is the `title` text needed (it is not announced)?
+8. **Status explanation**: verify the visible summary explanation and screen-reader badge text.
 
 ## 8. Rules for new UI
 

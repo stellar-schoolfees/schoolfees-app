@@ -96,24 +96,22 @@ reaches a transaction, and each of those functions has unit tests.
 | Unclear outcomes are never retried silently | **exists and is deliberate** — when a transaction is sent but not confirmed, the app says "check it before retrying" **with the hash**, rather than resending |
 | An unconfirmed or failed transaction is never reported as successful | **exists** — only `SUCCESS` returns a hash-plus-result; `FAILED` and an unconfirmed poll both throw |
 
-## 6. Duplicate transaction submission
+## 6. Duplicate submission and abandoned requests
 
-- **Partly prevented.** Every action button lives inside a `<fieldset
-  disabled={busy}>` (or the button itself is disabled while `busy`), and
-  `useAction` sets `busy` before awaiting. A second click after the re-render
-  cannot start a second submission.
-- **Not guarded in code.** `useAction.run` has no re-entry guard of its own, so
-  it relies on React flushing the `busy` state before the next click event can
-  be handled. There is no request-generation counter and no explicit
-  "already submitting" check. Tracked as
-  [draft 13](issue-drafts/13-guard-against-duplicate-submission.md).
-- **Not guarded on the network either:** the contract has no idempotency key, and
-  a duplicate `pay` would be a second real payment (it would succeed unless it
-  overpays, in which case it fails with `Overpayment`). A duplicate `create_fee`
-  with the same reference fails with `DuplicateReference` (32), which is the one
-  place the contract itself blocks a repeat.
-- The rules that do exist: one user action, one submitted transaction; no
-  automatic resend of anything whose outcome is unknown.
+`useAction.run` uses a synchronous in-flight ref: a second call cannot start
+while the first promise remains pending, including after reset. Reset and
+unmount invalidate the request generation; late results return `undefined`
+instead of updating a summary or triggering a follow-up read. New actions clear
+previous success. Tests cover same-turn duplicates, reset success/failure,
+unmount and retry.
+
+This is a per-hook guard, not cross-tab or on-chain idempotency. A second tab
+can still pay twice. Unknown transaction outcomes are never automatically resent.
+
+Wallet restore, connect and network checks are invalidated by disconnect or
+unmount; duplicate connect requests are dropped. Older network responses cannot
+override a newer failure. The UI disconnects immediately even if the adapter's
+disconnect fails; the in-flight connection guard remains held until it settles.
 
 ## 7. Dependency review
 
@@ -122,8 +120,7 @@ reaches a transaction, and each of those functions has unit tests.
 - Adding a dependency needs a stated reason and a look at the maintainer and
   recent releases (`AGENTS.md`). The register is
   [`RESOURCES.md`](RESOURCES.md).
-- **`npm audit` was run for the first time on 2026-10-01** (it had not been
-  before). Result: **19 advisories — 13 low, 6 moderate.** Every one arrives
+- **`npm audit --json` was rerun on 2026-10-07.** Result: **19 advisories — 13 low, 6 moderate.** Every one arrives
   through `@creit.tech/stellar-wallets-kit@2.7.0`, whose dependency tree pulls
   multi-chain wallet SDKs: `@hot-wallet/sdk` → `@near-js/*` → `secp256k1` →
   `elliptic` (GHSA-848j-6mx2-7j84), plus `@solana/web3.js` → `jayson` →
@@ -157,9 +154,9 @@ Verified by reading the source, not assumed:
   `https://uni.onekey-asset.com` for two entries) when the wallet picker was
   opened, because the kit rendered an icon per module. That is fixed as of
   2026-10-01: the picker is narrowed to Stellar wallets only and serves local
-  icon files from `public/wallet-icons/`. The README's "no network request
-  other than to the Stellar RPC endpoint" is now true again — on a page load and
-  when the picker opens. No WalletConnect/Reown code is present in the bundle
+  icon files from `public/wallet-icons/`. Local icons remove those image requests. The selected wallet provider can
+  make its own requests; no browser network capture has been run. The 2026-10-07
+  built-asset string search found no WalletConnect/Reown identifiers
   (grepped: zero matches). Reported in
   `schoolfees-docs/docs/audits/2026-10-01-06-security-review.md`.
 - The full storage and privacy inventory is written for a non-developer reader in
@@ -172,18 +169,19 @@ Verified by reading the source, not assumed:
 - **No CSP or security headers**, because there is no hosting configuration yet;
   the host is a human decision (`DEPLOYMENT_CHECKLIST.md`). When one exists, a
   `Content-Security-Policy` restricting `connect-src` to the RPC URL and
-  `img-src` to `self` plus the icon host would be the natural hardening step.
-- **No CSRF/XSS surface to protect**, because there is no session, no cookie and
-  no server. React's escaping plus the absence of `innerHTML` covers the XSS
-  vector.
+  `img-src` to `self` for local wallet icons would be the natural hardening step.
+- There is no authenticated server session for CSRF. React escaping and
+  absence of raw HTML reduce XSS exposure; compromised dependencies or hosting
+  remain risks and have not been independently audited.
 - **No protection against the most likely real attack**: a user being persuaded
   to pay a fee that is not theirs, or to the wrong address. The app shows what
   the contract stores, which is the best it can do; verification is out of band.
 - **Wallet and browser compromise** are outside this app's control.
-- **The wallet kit is a large, multi-chain dependency** (~1 MB in the initial
-  bundle) whose modules we do not review; using a narrower module set is
-  [draft 02](issue-drafts/02-code-split-wallet-kit.md) and the audit question in
-  the gap map's "Decisions needed from Tim".
+- **The installed wallet kit retains a multi-chain dependency tree.** The app
+  imports only eight Stellar module entry points lazily; excluded modules remain
+  installed but are not intentionally imported. This reduces runtime exposure,
+  not the audit count or every possible dependency risk. See
+  [RESOURCES.md](RESOURCES.md) for the current review.
 - **Simulated reads do not keep records alive.** The app's read screens call
   `simulateTransaction`, so the contract's TTL extension during a read is
   discarded; only submitted transactions persist an extension. The "every

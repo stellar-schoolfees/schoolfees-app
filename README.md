@@ -39,14 +39,10 @@ Contract functions are called exactly as named in `src/lib.rs` in
   or seed phrase.** It only ever sees a public address and a signed XDR.
 - Every action that produces a transaction shows the **transaction hash and an
   explorer link**.
-- **No analytics, no trackers, no third-party scripts, no backend.** The app
-  itself sends nothing anywhere except to the Stellar RPC endpoint from `.env`.
-  A 2026-10-01 audit found that opening the wallet picker used to load wallet
-  icons from third-party hosts; that is fixed: the picker now shows only Stellar
-  wallets and serves local icon files, so **the only outside request the app
-  makes is to the RPC endpoint from `.env`**, both on page load and when the
-  picker opens. See [docs/SECURITY.md](docs/SECURITY.md) for exactly what is
-  fetched and when.
+- **No analytics, trackers, injected third-party scripts or backend.** The
+  app calls the configured RPC, loads wallet modules locally and uses local
+  picker icons. The selected wallet provider may make its own requests during
+  connection. No browser network capture has verified all wallet traffic.
 - The reference field accepts **only a 32-byte opaque value** (64 hex
   characters) and says in plain words that names, phone numbers, emails and
   student or member ids must never be entered.
@@ -70,7 +66,7 @@ documented in [.env.example](.env.example), and it is read in exactly one place,
 ```bash
 npm run lint        # oxlint
 npm run typecheck   # tsc -b (strict)
-npm test            # vitest, unit tests for src/lib
+npm test            # pure logic, hook, component and page regressions
 npm run build       # tsc -b && vite build
 ```
 
@@ -117,22 +113,14 @@ direction. If `ERRORS.md` changes, re-copy
 
 Read this before trusting the app with anything.
 
-**Proven — actually executed, locally and in CI:**
+**Verified locally on 2026-10-07:**
 
-- Unit tests for every pure function in `src/lib/`: 85 tests covering amount
-  parsing and formatting, date conversion, opaque reference validation, address
-  and fee id validation, fee status rules, `remaining`, explorer links, config
-  resolution and the testnet refusal paths, and the full error mapping.
-- Render tests for every component and every page (69 more tests, 154 total)
-  under `happy-dom`, each including an automated axe-core accessibility check
-  that fails on serious violations. Page write paths run against a mocked
-  wallet module and a fake contract client, so no test touches a network or a
-  real wallet. The axe harness proves itself in `src/test/render.test.tsx` by
-  failing on a deliberately broken label.
-- ScVal conversion round-trips against the **real** SDK encoders, including a
-  `Fee` struct with the same type hints as the contract's ABI (u64, i128,
-  address, bytes, bool).
-- `oxlint`, `tsc` in strict mode, and the production build all pass.
+- 26 test files, 168 tests passed, including pure validation and SDK ScVal
+  conversion, mocked page flows, automated axe checks, synchronous duplicate
+  guards and abandoned wallet/action request regressions.
+- Lint and strict TypeScript checks passed. Current build evidence is in
+  [docs/TESTING.md](docs/TESTING.md). These are local working-tree checks;
+  this update has not been pushed or verified on GitHub CI.
 
 **Assumed — never exercised:**
 
@@ -180,8 +168,9 @@ blocked until a real school or tutorial centre has agreed to a pilot.
 
 ## Notes
 
-- The wallet kit is a large dependency tree: the initial bundle is about 1 MB
-  (263 kB gzipped). Splitting it out is [draft 02](docs/issue-drafts/02-code-split-wallet-kit.md).
+- The wallet adapter now imports eight Stellar modules lazily instead of the
+  broad default module bundle. The installed dependency tree still has 19
+  audit findings (13 low, 6 moderate); see [docs/RESOURCES.md](docs/RESOURCES.md).
 - Amounts are whole numbers in the token's smallest unit; the app does not
   convert decimal places yet ([draft 03](docs/issue-drafts/03-token-decimals-and-metadata.md)).
 - Browsing the app does **not** keep a fee record alive. Reads are simulations

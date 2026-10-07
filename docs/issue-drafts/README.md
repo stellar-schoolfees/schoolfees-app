@@ -1,6 +1,7 @@
 # Issue drafts
 
-Drafts for work that is **not built in v0**. They follow the template in
+Drafts describe original scopes. Status notes in completed drafts distinguish
+implemented work from remaining contributor work. They follow the template in
 [`AGENTS.md`](https://github.com/stellar-schoolfees/schoolfees-app/blob/main/AGENTS.md)
 and are **never created on GitHub by an agent** — the maintainer decides what
 becomes an issue.

@@ -1,5 +1,9 @@
 # Add component and accessibility tests
 
+**Status: partly implemented.** Component/page render tests and automated axe
+checks exist. Screen-reader and real-browser keyboard/zoom audits remain open.
+The original draft below records the broader scope.
+
 **Difficulty:** medium
 **Labels:** help wanted, area:app
 

@@ -1,5 +1,9 @@
 # Guard against a duplicate transaction submission
 
+**Status: implemented locally.** Implemented locally on 2026-10-07 with deferred hook regressions. Cross-tab and on-chain idempotency remain out of scope.
+
+The original draft below is historical scope, not current missing behaviour.
+
 **Difficulty:** easy
 **Labels:** good first issue, area:app
 

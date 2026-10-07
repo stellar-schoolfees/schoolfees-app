@@ -1,5 +1,3 @@
-import { ConnectPrompt } from '../components/ConnectPrompt';
-import { WalletBar } from '../components/WalletBar';
 import type { PageProps } from './shared';
 
 /**
@@ -7,7 +5,7 @@ import type { PageProps } from './shared';
  * It also states plainly what has not happened yet, because a reader who lands
  * here should not have to hunt for that.
  */
-export function ConnectPage({ config, wallet }: PageProps) {
+export function ConnectPage({ config }: PageProps) {
   return (
     <section>
       <h1>Pay school fees, with a record both sides can read</h1>
@@ -19,9 +17,8 @@ export function ConnectPage({ config, wallet }: PageProps) {
         anyone&rsquo;s money.
       </p>
 
-      <WalletBar wallet={wallet} />
-
-      {wallet.address === null && <ConnectPrompt wallet={wallet} />}
+      <p className="hint">Use Connect wallet in the header to create, view or pay a fee.
+        Viewing a fee does not request a signature.</p>
 
       <div className="card">
         <h2>What you can do here</h2>

@@ -4,8 +4,8 @@ The release gate for the app. Adapted from the Build Arsenal
 `RELEASE_RUNBOOK`, `PRELAUNCH_CHECKLIST` and `DEPLOYMENT_CHECKLIST_TEMPLATE` to a
 static Vite bundle that talks to testnet.
 
-**Testnet only.** Nothing on this page has been done: the app has never been
-deployed, and it has never run against a deployed contract or a real wallet.
+**Testnet only.** Local checks were rerun on 2026-10-07; deployment items remain unchecked.
+The app has never run against a deployed contract or a real wallet.
 Publishing the bundle is **Tim's step** (see §7) — an agent writes scripts and
 stops.
 
@@ -26,11 +26,10 @@ stops.
 - [ ] `npm ci` from the committed lockfile — never a fresh resolve for a release.
 - [ ] `npm run lint` — 0 errors, 0 warnings.
 - [ ] `npm run typecheck` — clean.
-- [ ] `npm test` — 24 files, 154 tests passing locally (153 in CI; the cross-repo
-      `ERRORS.md` comparison skips there).
-- [ ] `npm run build` — succeeds. **The ~1 MB initial chunk warning is known and
-      accepted** ([draft 02](issue-drafts/02-code-split-wallet-kit.md)); do not
-      let a new warning appear unnoticed.
+- [ ] `npm test` ? current local baseline: 26 files, 168 tests. The cross-repo
+      error comparison skips when the sibling contract repo is absent.
+- [ ] `npm run build` ? current local build passed; main chunk 799.26 kB
+      (188.53 kB gzip), still above Vite's 500 kB warning. Recheck release output.
 - [ ] `docs/contract-errors.md` re-copied from the contract's `ERRORS.md` in the
       same commit as any error-table change.
 - [ ] Source maps: the default Vite build ships **none**. Shipping them would be
@@ -70,14 +69,13 @@ stops.
       there is no "no results" state — see
       [`TESTING.md`](TESTING.md) §3.)
 - [ ] **Duplicate submission**: double-clicking a submit button produces exactly
-      one transaction on-chain. Currently only partly guarded — confirm it by
-      hand, and see [draft 13](issue-drafts/13-guard-against-duplicate-submission.md).
+      one transaction on-chain. The synchronous hook guard is unit tested;
+      the live transaction check is still pending.
 - [ ] **Failure after sending**: an unconfirmed transaction is reported with its
       hash and never as a success.
 - [ ] **Console is clean** on every page: no errors, no warnings, and no failed
-      requests other than the intended RPC calls. (Opening the wallet picker
-      fetches remote wallet icons — expected, see
-      [`SECURITY.md`](SECURITY.md) §8.)
+      requests other than configured RPC and selected wallet provider traffic.
+      Picker icons are local; browser traffic has not been captured.
 - [ ] **No analytics, trackers or third-party scripts** were added by the host.
 - [ ] Mobile at **390×844**: no horizontal scrolling, banner visible, actions
       reachable.
@@ -88,8 +86,7 @@ stops.
 - [ ] `index.html` title and meta description still describe the deployed state
       (they currently say testnet, which stays true).
 - [ ] `theme-color` matches the banner background.
-- [ ] A **favicon** exists — currently missing
-      ([draft 16](issue-drafts/16-favicon-and-social-metadata.md)).
+- [ ] Confirm the existing local SVG favicon loads on the deployed URL.
 - [ ] Static hosting chosen and configured by Tim; the build output directory is
       `dist`.
 - [ ] Client-side routing rewrites are **not needed today** (the app has no

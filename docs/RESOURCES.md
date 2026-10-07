@@ -11,7 +11,7 @@ licence, and whether it ships to production.
 
 | Package | Declared | Installed | Purpose | Licence | Ships to production |
 |---|---|---|---|---|---|
-| `@creit.tech/stellar-wallets-kit` | `^2.7.0` | 2.7.0 | wallet connection, address retrieval, signing | MIT | **yes** — bundled (~1 MB of the initial chunk) |
+| `@creit.tech/stellar-wallets-kit` | `^2.7.0` | 2.7.0 | wallet connection, address retrieval, signing | MIT | **yes** - lazy chunks, eight explicit Stellar modules |
 | `@stellar/stellar-sdk` | `^17.2.0` | 17.2.0 | RPC client, `StrKey` validation, transaction building, XDR/ScVal encoding | Apache-2.0 | **yes** |
 | `react` | `^19.2.8` | 19.3.0 | UI | MIT | **yes** |
 | `react-dom` | `^19.2.8` | 19.3.0 | UI rendering | MIT | **yes** |
@@ -24,9 +24,21 @@ licence, and whether it ships to production.
 | `vite` | `^8.3.0` | 8.3.1 | dev server and production bundler | MIT | no (dev) — its output is, its code is not |
 | `vitest` | `^5.0.3` | 5.0.3 | unit test runner | MIT | no (dev) |
 
-Every declared licence was read from the installed package. All twelve are
-permissive (MIT or Apache-2.0); **none is copyleft**, so nothing here imposes a
-distribution obligation on the app's MIT licence.
+The table above is the original core-tool inventory. On 2026-10-07, all 17
+currently declared packages were checked against installed package metadata.
+The additional testing dependencies are:
+
+| Package | Installed | Licence | Production |
+|---|---|---|---|
+| @testing-library/dom | 10.4.2 | MIT | no |
+| @testing-library/react | 16.3.3 | MIT | no |
+| @testing-library/user-event | 14.6.7 | MIT | no |
+| axe-core | 4.13.0 | MPL-2.0 | no |
+| happy-dom | 20.14.5 | MIT | no |
+
+These test tools are not shipped as part of the app's production code. Package
+metadata is an inventory, not a legal compliance audit; licence obligations
+must be reviewed for any redistribution of dependencies.
 
 ## 2. Transitive dependencies that matter
 
@@ -58,9 +70,9 @@ matches). They still count as part of the audited dependency tree.
 19 vulnerabilities (13 low, 6 moderate)
 ```
 
-- **All 19 are transitive**, reached through
-  `@creit.tech/stellar-wallets-kit@2.7.0`. None is in the app's own code or in
-  the four direct runtime dependencies.
+- Findings originate in transitive NEAR/Solana dependency paths through
+  `@hot-wallet/sdk`. npm also flags the direct wallet-kit package because of
+  those dependencies; they are not all labelled transitive by npm.
 - The only fix `npm audit` offers is `npm audit fix --force`, which **downgrades
   the wallet kit to 1.5.0** — a breaking change. It was **not** applied. Nothing
   was installed, upgraded or downgraded.
@@ -93,9 +105,9 @@ and the exploitability question itself is written up in
 
 - **No fonts** are shipped — the app uses the system font stack, so there is no
   font licence to track.
-- **No images, icons or illustrations** are shipped — the app has no assets
-  directory and no `<img>`. The only images a user sees come from the wallet
-  kit's remote icon URLs (see [`SECURITY.md`](SECURITY.md) §8).
+- Local `public/favicon.svg` and eight wallet picker PNG icons are shipped.
+  The icons already existed before this update; their provenance/licence needs
+  confirmation before broader distribution. No new artwork was copied.
 - **No third-party CSS** or theme. `src/index.css` is written for this project.
 
 ## 6. Rules for adding a dependency
@@ -109,3 +121,19 @@ and the exploitability question itself is written up in
    a blocker and say so, rather than assuming.
 5. Never add a dependency for a visual effect, and never add analytics, trackers
    or third-party scripts: both are forbidden by `AGENTS.md`.
+
+## 2026-10-07 dependency review
+
+`npm audit --json` returned **19 findings (13 low, 6 moderate; no high or
+critical)**. The installed tree and lockfile were not changed. The aggregate
+wallet-kit fix recommends a breaking downgrade to 1.5.0; no force fix was run.
+The current stream-json advisories include GHSA-528h-pc64-c93x,
+GHSA-hqr4-qq8f-hg3x and GHSA-mjw6-4jj6-33hc.
+
+The adapter now imports the existing eight Stellar module entry points, not
+`modules/utils` or `defaultModules`. Excluded multi-chain modules therefore have
+no intentional application import. A built-asset string search for near-api,
+@hot-wallet, walletconnect, reown, stream-json, secp256k1 and excluded module
+class names returned no matches. Minification makes string absence insufficient
+proof of exploitability or absence; no security audit, SBOM or browser traffic
+capture is claimed. Installed advisories still require upstream review.

@@ -42,21 +42,21 @@ in `schoolfees-docs/docs/audits/`.
 Each has a draft in [docs/issue-drafts](docs/issue-drafts):
 
 - [ ] Generate the opaque reference in the app by hashing an internal id — [draft](docs/issue-drafts/01-in-app-reference-generator.md).
-- [ ] Code-split the wallet kit out of the initial bundle — [draft](docs/issue-drafts/02-code-split-wallet-kit.md).
+- [x] Code-split the wallet kit out of the initial bundle — [draft](docs/issue-drafts/02-code-split-wallet-kit.md).
 - [ ] Show amounts in human units from the token's decimals — [draft](docs/issue-drafts/03-token-decimals-and-metadata.md).
 - [ ] End-to-end tests against testnet — [draft](docs/issue-drafts/04-end-to-end-tests-against-testnet.md).
 - [ ] A printable receipt for a payer — [draft](docs/issue-drafts/05-receipt-export.md).
 - [ ] List a school's fees from `FeeCreated` events — [draft](docs/issue-drafts/06-list-school-fees.md).
-- [ ] Component and page render tests, and a screen-reader audit — [draft](docs/issue-drafts/07-component-and-accessibility-tests.md).
+- [ ] Screen-reader and real-browser accessibility audit (component/page render tests are implemented) — [draft](docs/issue-drafts/07-component-and-accessibility-tests.md).
 - [ ] Restore an archived fee record (the contract has no restore entrypoint in v0 either) — [draft](docs/issue-drafts/08-restore-archived-fee-record.md).
 - [ ] Translate the interface — [draft](docs/issue-drafts/09-translate-the-interface.md).
-- [ ] Refresh a fee's data after a successful write — [draft](docs/issue-drafts/10-refresh-fee-data-after-a-write.md).
+- [x] Refresh a fee's data after a successful write — [draft](docs/issue-drafts/10-refresh-fee-data-after-a-write.md).
 - [ ] Bound RPC retries and timeouts — [draft](docs/issue-drafts/11-bound-rpc-retries-and-timeouts.md).
 - [ ] Give every view a URL, and deep links that work on reload — [draft](docs/issue-drafts/12-url-routing-and-deep-links.md).
-- [ ] Guard against a duplicate transaction submission — [draft](docs/issue-drafts/13-guard-against-duplicate-submission.md).
+- [x] Guard against a duplicate transaction submission — [draft](docs/issue-drafts/13-guard-against-duplicate-submission.md).
 - [ ] Move focus, and announce the change, when the page changes — [draft](docs/issue-drafts/14-focus-management-on-page-change.md).
-- [ ] Correct the claim that the app makes no request other than to the RPC endpoint — [draft](docs/issue-drafts/15-correct-the-outbound-request-claim.md).
-- [ ] Add a favicon, and decide the social metadata that does not need a domain — [draft](docs/issue-drafts/16-favicon-and-social-metadata.md).
+- [x] Correct the claim that the app makes no request other than to the RPC endpoint — [draft](docs/issue-drafts/15-correct-the-outbound-request-claim.md).
+- [x] Add a favicon, and decide the social metadata that does not need a domain — [draft](docs/issue-drafts/16-favicon-and-social-metadata.md).
 - [ ] Decide what to do about the wallet kit's dependency advisories — [draft](docs/issue-drafts/17-wallet-kit-dependency-advisories.md).
 - [x] Decide how to handle the fact that simulated reads never keep a record
       alive — decided 2026-10-02, option A (document it): the README,
@@ -72,3 +72,14 @@ any feature the contract does not have.
 Reminders or notifications are also out of scope: they need a backend and a
 contact channel this project deliberately does not have, and the app stores no
 contact details (and must not).
+
+## 2026-10-07 local hardening
+
+- [x] Reject stale action results after reset/unmount; keep duplicate guard until settlement.
+- [x] Guard wallet restore/connect/network against disconnect and unmount.
+- [x] Import only eight Stellar wallet modules lazily with local icons.
+- [x] Remove duplicate Home wallet controls; show status meaning visibly.
+- [x] Full local suite: 26 files, 168 tests passed.
+
+These updates have not been pushed; current GitHub CI is unverified. The audit
+still reports 19 findings; no pilot or deployed-wallet evidence is claimed.

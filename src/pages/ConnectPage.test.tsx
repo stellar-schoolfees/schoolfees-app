@@ -24,24 +24,23 @@ describe('<ConnectPage />', () => {
     expect(text).toContain('no flow here has been exercised end to end yet');
   });
 
-  it('shows the connected wallet and the recorded contract id', () => {
+  it('shows the recorded contract id and leaves wallet controls in the shell', () => {
     const config = configFactory();
     const view = renderOnly(
       <ConnectPage {...pagePropsFactory({ config, wallet: walletFactory() })} />,
     );
     expect(textOf(view.container)).toContain(`Contract: ${config.contractId}`);
-    expect(view.getByRole('button', { name: 'Disconnect' })).not.toBeNull();
+    expect(view.queryByRole('button', { name: 'Disconnect' })).toBeNull();
   });
 
-  it('shows the connect prompt before a wallet is connected', () => {
+  it('directs users to the header without duplicating the connect control', () => {
     const view = renderOnly(
       <ConnectPage
         {...pagePropsFactory({ wallet: walletFactory({ address: null }) })}
       />,
     );
-    expect(
-      view.getAllByRole('button', { name: 'Connect wallet' }).length,
-    ).toBeGreaterThan(0); // one in the wallet bar, one in the prompt
+    expect(view.queryByRole('button', { name: 'Connect wallet' })).toBeNull();
+    expect(textOf(view.container)).toContain('Connect wallet in the header');
   });
 
   it('passes the accessibility check connected and disconnected', async () => {

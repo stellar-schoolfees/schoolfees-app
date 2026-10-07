@@ -105,8 +105,7 @@ yet" from "no results" from "failed to load".
 - Reference small screen is **390×844**; the layout must not scroll horizontally
   at that width or above (verified in a browser during development at 390px).
 - Body text never below 16px; touch targets at least 44×44px (see
-  [`ACCESSIBILITY.md`](ACCESSIBILITY.md) for the two controls that currently
-  miss it).
+  [`ACCESSIBILITY.md`](ACCESSIBILITY.md) for the target and verification limits).
 - Inputs are 46px tall with `inputmode="numeric"` where the value is numeric.
 - Actions go full width below 34rem.
 - No hover-only affordance.
@@ -118,11 +117,6 @@ Recorded rather than hidden; all are in the audits under
 
 | Where | Deviation | Tracked by |
 |---|---|---|
-| `ConnectPage` | Renders `WalletBar` a second time even though the app shell already renders it in the header, so the Home page shows the connect control three times (header bar, page bar, connect prompt). Weak hierarchy, and three identical "Connect wallet" buttons. | audit `08`, [draft 10](issue-drafts/10-refresh-fee-data-after-a-write.md) is unrelated — this one is listed in the audit and left for a deliberate fix |
-| `PayPage`, `SchoolActionsPage` | After a write, the fee summary above the form still shows the pre-write numbers, and nothing says it is stale. | [draft 10](issue-drafts/10-refresh-fee-data-after-a-write.md) |
-| `FeeSummary` | A status badge's meaning is carried in a `title` attribute (`describeStatus`), which a phone or a keyboard cannot reach. | audit `07` |
-| Nav pills | 40px tall, below the project's own 44px target. | audit `07` |
-| Placeholder text | `--line-strong` on white is about 2.6:1, below the 4.5:1 text minimum. Every field has a visible label, so the impact is low, but it is a real deviation. | audit `07` |
 | Global | No URL routing, so no per-view titles and no deep links (Flowtick §4). | [draft 12](issue-drafts/12-url-routing-and-deep-links.md) |
 
 ## 8. Adding UI
@@ -136,3 +130,11 @@ Recorded rather than hidden; all are in the audits under
   the code does, and error wording is never written here — it comes from
   `ERRORS.md` through `src/lib/contractErrors.ts`.
 - Check it at 390px and with the keyboard before calling it done.
+
+## 2026-10-07 fixes
+
+Home leaves connection controls in the header and accurately states that lookup
+requires a wallet without signing. FeeSummary shows the full status explanation
+as visible text. Existing nav targets are 44px and placeholder text uses the
+muted token. Pay/refund/close already refresh the summary; they are not pending
+features. Keyboard and narrow viewport behaviour still need browser validation.
