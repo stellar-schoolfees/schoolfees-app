@@ -94,3 +94,11 @@ issue for it yourself — the maintainer decides what becomes an issue.
 
 By contributing you agree your work is licensed under the MIT license in
 [LICENSE](LICENSE).
+
+## Contributor templates
+
+The [bug report](.github/ISSUE_TEMPLATE/bug_report.yml),
+[feature request](.github/ISSUE_TEMPLATE/feature_request.yml), and
+[pull request template](.github/pull_request_template.md) describe the evidence
+and checks to include. These are templates only; preparing one does not publish
+an issue or authorize deployment. Keep public reports free of secrets and personal data.

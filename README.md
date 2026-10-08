@@ -1,5 +1,9 @@
 # schoolfees — app
 
+The contract now has a [verified synthetic testnet demonstration](https://github.com/stellar-schoolfees/schoolfees-contracts/blob/main/docs/TESTNET_DEMONSTRATION.md).
+The browser app has not been deployed or tested with a real wallet. No real pilot
+or production readiness is claimed.
+
 A small web app for paying **school fees** on Stellar testnet. A school records
 a fee obligation against an opaque reference, a payer settles it in any number
 of installments, and anyone can read the record. The contract never holds money:
