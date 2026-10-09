@@ -13,15 +13,16 @@ import {
 import { ConnectPage } from './ConnectPage';
 
 describe('<ConnectPage />', () => {
-  it('renders the heading and the honest not-happened-yet card', () => {
+  it('renders the landing heading and truthful prototype scope', () => {
     const view = renderOnly(
       <ConnectPage {...pagePropsFactory({ wallet: walletFactory() })} />,
     );
     const text = textOf(view.container);
     expect(text).toContain('Pay school fees');
-    expect(text).toContain('What has not happened yet');
+    expect(text).toContain('Still a prototype.');
     expect(text).toContain('No pilot has happened');
-    expect(text).toContain('no flow here has been exercised end to end yet');
+    expect(text).toContain('synthetic testnet contract demonstration is deployed');
+    expect(text).toContain('Browser wallet business flows still need verification');
   });
 
   it('shows the recorded contract id and leaves wallet controls in the shell', () => {
@@ -40,7 +41,7 @@ describe('<ConnectPage />', () => {
       />,
     );
     expect(view.queryByRole('button', { name: 'Connect wallet' })).toBeNull();
-    expect(textOf(view.container)).toContain('Connect wallet in the header');
+    expect(textOf(view.container)).toContain('Connect wallet in the workspace header');
   });
 
   it('passes the accessibility check connected and disconnected', async () => {

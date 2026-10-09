@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="620" viewBox="0 0 700 620">
+  <!-- Original SchoolFees studio sculpture. Decorative artwork; no third-party assets. -->
+  <defs>
+    <linearGradient id="studio" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f7f8"/><stop offset="1" stop-color="#e9edf0"/></linearGradient>
+    <linearGradient id="oak" x1="0" y1="0" x2="1" y2=".4"><stop stop-color="#dec1a1"/><stop offset=".42" stop-color="#b98961"/><stop offset=".7" stop-color="#ddb894"/><stop offset="1" stop-color="#b78660"/></linearGradient>
+    <linearGradient id="woodside" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#a17451"/><stop offset="1" stop-color="#c79871"/></linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#dbe4ec"/></linearGradient>
+    <linearGradient id="cover" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5881c3"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6d9569"/><stop offset=".6" stop-color="#416646"/><stop offset="1" stop-color="#294836"/></linearGradient>
+    <radialGradient id="light"><stop stop-color="#fff" stop-opacity=".92"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="15"/></filter>
+    <filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#46515a" flood-opacity=".17"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".013 .32" numOctaves="2" seed="12"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".10"/></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"/><feBlend in="SourceGraphic" mode="multiply"/></filter>
+    <clipPath id="frame"><rect x="12" y="12" width="676" height="596" rx="180"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="700" height="620" fill="url(#studio)"/>
+    <ellipse cx="115" cy="110" rx="440" ry="300" fill="url(#light)"/>
+    <path d="M0 437L700 401V620H0Z" fill="#e7ecef"/>
+    <ellipse cx="365" cy="489" rx="202" ry="33" fill="#66727b" opacity=".18" filter="url(#soft)"/>
+    <!-- Bent oak stand, warm end grain, and a quiet stack of paper. -->
+    <g filter="url(#shadow)">
+      <path d="M198 466L438 516L555 459L317 411Z" fill="#a77854"/>
+      <path d="M198 447L438 497L555 440V459L438 516L198 466Z" fill="url(#woodside)"/>
+      <path d="M198 447L317 392L555 440L438 497Z" fill="url(#oak)" filter="url(#grain)"/>
+      <path d="M283 440V283C283 192 350 156 408 181C454 201 475 249 475 296V440L437 433V294C437 255 418 224 391 215C353 201 320 233 320 283V449Z" fill="#a37451"/>
+      <path d="M264 431V278C264 187 331 151 389 176C435 196 456 244 456 291V435L418 428V289C418 250 399 219 372 210C334 196 301 228 301 278V440Z" fill="url(#oak)" filter="url(#grain)"/>
+      <path d="M280 426V278C280 202 331 172 378 188" stroke="#f5debe" stroke-opacity=".42" stroke-width="2" fill="none"/>
+    </g>
+    <!-- A blue-bound open book: public records without personal identifiers. -->
+    <g filter="url(#shadow)">
+      <path d="M153 382L283 325L418 350L353 394L221 439Z" fill="url(#cover)"/>
+      <path d="M153 382V398L221 454L353 408L418 367V350L353 394L221 439Z" fill="#315b9e"/>
+      <path d="M163 379L281 328L282 344L211 402Z" fill="url(#paper)"/>
+      <path d="M211 402C229 367 258 337 292 328L401 352C371 359 343 383 327 407Z" fill="url(#paper)"/>
+      <path d="M163 379C194 375 209 378 211 402L327 407L218 440Z" fill="#f8fafc"/>
+      <path d="M163 382L217 443L332 409" stroke="#c3cdd7" stroke-width="2" fill="none"/>
+      <path d="M168 387L218 446L340 410M172 392L219 449L347 411" stroke="#e2e8ef" stroke-width="2" fill="none"/>
+      <path d="M215 398C233 367 258 343 290 333" stroke="#bccbd8" stroke-width="1.5" fill="none"/>
+      <path d="M226 393C242 371 268 348 296 342M237 389C254 370 275 354 310 347M249 385C268 368 286 358 324 352" stroke="#b7c9dc" stroke-width="1" fill="none" opacity=".65"/>
+    </g>
+    <!-- One leafy branch balances the static wooden form. -->
+    <path d="M505 458C502 385 527 284 584 207" stroke="#58724b" stroke-width="5" fill="none"/>
+    <path d="M517 369C489 360 464 331 466 305C493 298 516 326 517 369Z" fill="url(#leaf)"/>
+    <path d="M528 325C530 294 551 277 585 283C580 313 555 329 528 325Z" fill="url(#leaf)"/>
+    <path d="M541 295C509 283 497 252 506 228C537 238 547 263 541 295Z" fill="url(#leaf)"/>
+    <path d="M564 254C568 225 594 210 621 215C617 244 592 262 564 254Z" fill="url(#leaf)"/>
+    <path d="M581 213C559 190 563 164 581 145C602 165 600 192 581 213Z" fill="url(#leaf)"/>
+    <path d="M513 362L475 316M538 295L515 244M567 250L608 224" stroke="#9ab187" stroke-opacity=".55" stroke-width="1.3" fill="none"/>
+    <ellipse cx="504" cy="460" rx="39" ry="13" fill="#8e9695" opacity=".12"/>
+  </g>
+</svg>

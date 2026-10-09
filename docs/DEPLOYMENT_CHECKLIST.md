@@ -1,5 +1,9 @@
 # Deployment checklist — schoolfees app
 
+## October 9, 2026 current release boundary
+
+A maintainer-authorized synthetic testnet contract demonstration exists, and the browser prototype is hosted at https://schoolfees-testnet.vercel.app. A real partner pilot remains separately gated. The October 9 redesign changes presentation, not deployment scripts, contract methods, wallet signing or configuration safety. The new UI must pass its existing checks before the maintainer publishes it. A connected-wallet screenshot does not establish a signed business-flow test. The older checklist below is historical and must not be read as proof that no contract address or hosted app exists today.
+
 The release gate for the app. Adapted from the Build Arsenal
 `RELEASE_RUNBOOK`, `PRELAUNCH_CHECKLIST` and `DEPLOYMENT_CHECKLIST_TEMPLATE` to a
 static Vite bundle that talks to testnet.

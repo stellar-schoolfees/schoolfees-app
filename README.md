@@ -6,7 +6,7 @@
 </picture>
 
 The contract now has a [verified synthetic testnet demonstration](https://github.com/stellar-schoolfees/schoolfees-contracts/blob/main/docs/TESTNET_DEMONSTRATION.md).
-The browser app has not been deployed or tested with a real wallet. No real pilot
+The [hosted browser prototype](https://schoolfees-testnet.vercel.app) is public. Signed browser business flows remain unverified. No real pilot
 or production readiness is claimed.
 
 A small web app for paying **school fees** on Stellar testnet. A school records
@@ -14,9 +14,9 @@ a fee obligation against an opaque reference, a payer settles it in any number
 of installments, and anyone can read the record. The contract never holds money:
 payments move straight from the payer's balance to the school's.
 
-> **Status: v0 UI implemented (testnet only, never deployed, no pilot yet).**
-> Nothing here has touched a real wallet or a real network. The contract id is a
-> placeholder until a school or tutorial centre agrees to a pilot.
+> **Status: hosted testnet prototype, synthetic contract demo, no pilot or audit.**
+> The landing page opens the school or payer workspace. Wallet signing is explicit;
+> signed browser business flows still need verification.
 
 Part of the schoolfees project, which is three repositories:
 [`schoolfees-contracts`](https://github.com/stellar-schoolfees/schoolfees-contracts)
@@ -27,7 +27,7 @@ Part of the schoolfees project, which is three repositories:
 
 | Page | Who | What it does |
 |---|---|---|
-| Home / Connect | anyone | Explains the flow, connects a wallet, states what has not happened yet |
+| Landing / workspace | anyone | Explains the flow; Pay a fee, Create a fee and Open workspace lead to the relevant task |
 | Create a fee | school | Records a fee: token, opaque reference, total, due date |
 | View a fee | anyone | Looks a fee up by id and shows everything stored, plus its status |
 | Pay | payer | Pays part or all of a fee, straight to the school |
@@ -133,10 +133,10 @@ Read this before trusting the app with anything.
 
 **Assumed — never exercised:**
 
-- **No contract is deployed**, so the app has never called one. Every RPC call
+- **A synthetic contract demo is deployed**, but signed browser flows remain unverified. RPC calls
   in `src/lib/contract.ts` is unproven.
-- **No real wallet has connected**, signed, or been asked for its network.
-- **No transaction has ever been submitted** from this app, so the submit/poll
+- **Signed browser business flows are unverified.** Connection screenshots do not prove signing, payment or network refusal.
+- **No signed browser transaction has been verified** from this app, so the submit/poll
   path, the archived-record refusal, and the "extract the code from a host error
   string" assumption (`Error(Contract, #N)`) are untested against a real network.
 - The contract's `status()` return value is read defensively (symbol, single-element
@@ -149,13 +149,13 @@ Read this before trusting the app with anything.
   done, and colour contrast is verified against the design tokens rather than
   rendered styles.
 
-The first real evidence will come from a testnet pilot. Until then, treat the
+The published CLI demonstration verifies the contract, not the browser flow. Treat the
 chain-facing code as unverified.
 
 ## Contract deployment
 
-Deploying and setting the contract id are the maintainer's steps, and both stay
-blocked until a real school or tutorial centre has agreed to a pilot.
+A narrow maintainer-authorized synthetic testnet contract demonstration exists.
+A real school pilot remains separately gated; see the linked deployment record.
 [scripts/deploy-testnet.sh](scripts/deploy-testnet.sh) refuses to run without
 `PILOT_CONFIRMED=yes`. It was written, not run: no agent should run it.
 
@@ -192,3 +192,9 @@ blocked until a real school or tutorial centre has agreed to a pilot.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## October 9, 2026 presentation update
+
+The default screen is now a public landing page. **Pay a fee** opens the payer task, **Create a fee** opens the school form, and **Open workspace** starts with lookup. The workspace retains all existing contract operations and wallet/network refusals; the brand button and Home task return to the landing page.
+
+Local lint, typecheck, 168 tests and production build passed. Offline browser layout/accessibility checks passed 29 scenes; details and limits are in [docs/TESTING.md](docs/TESTING.md). Connected design screenshots use mocked public-wallet and fee fixtures. They do not establish signing or a live browser payment. The hosted link above is the current public prototype; the new design's publication is a separate maintainer step.

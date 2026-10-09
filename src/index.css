@@ -514,3 +514,122 @@ main.notice {
 /* Local project identity; text keeps the accessible name. */
 .brand-identity { display: inline-flex; align-items: center; gap: .65rem; font-weight: 700; }
 .brand-mark { display: block; width: 36px; height: 36px; flex: 0 0 36px; }
+
+/* 2026-10-09: spacious public landing and focused fee workspace. */
+:root {
+  --ink: #17233b; --bg: #f6f8fb; --max-width: 75rem;
+  --radius: 20px; --radius-sm: 12px; --pad: 1.5rem;
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px; --space-5: 48px; --space-6: 80px;
+  --display: clamp(2.5rem, 5.3vw, 4.75rem); --section-title: 2rem; --workspace-title: 2.25rem;
+}
+body { background: #fff; letter-spacing: -.012em; }
+.app-header { max-width: 75rem; padding-block: 24px; gap: 16px; }
+button { border-radius: 999px; padding: 12px 24px; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
+button.secondary { background: #fff; border-color: #98a2b3; }
+.brand-home { background: transparent; color: var(--ink); padding: 0; min-height: 44px; border-radius: 8px; font-size: 20px; letter-spacing: -.04em; }
+.brand-home:hover:not(:disabled) { color: var(--accent); background: transparent; }
+.header-actions { display: flex; align-items: center; gap: 24px; }
+.header-actions a { color: var(--ink-soft); font-size: 14px; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+.banner { font-size: 12px; padding-block: 8px; gap: 8px 16px; border-bottom-width: 1px; box-shadow: none; position: static; }
+.banner-tag { letter-spacing: .02em; }
+.landing-main { max-width: 75rem; padding-block: 0; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 24px; min-height: 620px; padding-block: 40px 56px; }
+.hero-context { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); margin: 0 0 24px; }
+.context-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.hero h1 { font-size: var(--display); font-weight: 600; line-height: 1.04; letter-spacing: -.055em; margin: 0 0 24px; max-width: none; }
+.hero-description { color: var(--ink-soft); font-size: 18px; line-height: 1.65; max-width: 38ch; margin: 0; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero-footnote { font-size: 13px; color: var(--muted); line-height: 1.55; margin-top: 16px; max-width: 40ch; }
+.hero-art img { display: block; width: 100%; height: auto; }
+.record-principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; border-block: 1px solid #e5e9ef; padding-block: 40px; }
+.record-principles h2 { font-size: 18px; font-weight: 650; }
+.record-principles p, .role-option p, .flow-steps p { color: var(--muted); font-size: 15px; line-height: 1.65; }
+.role-section, .steps-section { padding-block: 80px; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 40px; }
+.section-heading h2, .steps-section > h2, .prototype-section h2 { font-size: var(--section-title); font-weight: 600; letter-spacing: -.035em; line-height: 1.15; }
+.section-heading p { max-width: 34ch; color: var(--muted); margin: 0; }
+.role-options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.role-option { background: var(--bg); border-radius: 24px; padding: 40px; }
+.role-option h3 { font-size: 24px; font-weight: 600; letter-spacing: -.025em; margin: 24px 0 12px; }
+.role-option p { max-width: 48ch; min-height: 5em; margin-bottom: 24px; }
+.role-symbol { display: inline-grid; place-items: center; width: 48px; height: 48px; background: #fff; border-radius: 50%; font-size: 24px; color: var(--accent); }
+.steps-section { padding-top: 0; }
+.flow-steps { display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; counter-reset: step; padding: 0; margin: 40px 0 0; gap: 32px; }
+.flow-steps li { counter-increment: step; margin: 0; }
+.flow-steps li::before { content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #98a2b3; border-radius: 50%; color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.flow-steps h3 { font-size: 17px; font-weight: 600; margin: 0 0 8px; }
+.prototype-section { background: var(--bg); padding: 48px; border-radius: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+.prototype-section p { color: var(--muted); max-width: 52ch; }
+.prototype-section a { font-size: 14px; }
+.prototype-section details { align-self: center; border-block: 1px solid var(--line); padding-block: 16px; }
+summary { cursor: pointer; font-weight: 600; line-height: 1.5; min-height: 44px; padding-block: 10px; }
+summary:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 4px; }
+.prototype-section li { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+.site-footer { max-width: 75rem; margin-top: 0; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 32px; }
+.site-footer .hint { max-width: 58ch; margin: 0; }
+.site-footer .brand-mark { width: 28px; height: 28px; flex-basis: 28px; }
+.workspace-nav { max-width: 60rem; padding-top: 16px; padding-bottom: 24px; }
+.workspace-nav ul { gap: 8px; }
+.workspace-nav button { border-color: transparent; background: var(--bg); padding: 12px 20px; font-size: 14px; }
+.workspace-main { max-width: 60rem; padding-block: 24px 64px; }
+.workspace-main > section { max-width: 45rem; margin-inline: auto; }
+.workspace-main h1 { font-size: var(--workspace-title); line-height: 1.15; font-weight: 600; letter-spacing: -.04em; margin-bottom: 16px; }
+.workspace-main > section > p { color: var(--muted); max-width: 66ch; }
+.workspace-intro { display: flex; gap: 16px; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e5e9ef; margin-bottom: 40px; padding-bottom: 16px; color: var(--muted); font-size: 13px; }
+.workspace-intro p { margin: 0; font-weight: 600; color: var(--ink); }
+main:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 4px; border-radius: 12px; }
+fieldset { box-shadow: none; padding: 24px 32px 32px; border-color: #e5e9ef; margin-block: 32px; }
+legend { font-size: 15px; }
+.field { margin-block: 24px; }
+.field label { font-size: 15px; margin-bottom: 8px; }
+.field input { border-color: #98a2b3; border-radius: 10px; min-height: 52px; padding: 12px 16px; }
+.hint { font-size: 14px; line-height: 1.55; }
+.card, .notice { box-shadow: none; padding: 24px 32px; margin-block: 32px; }
+.summary { gap: 24px 32px; margin-top: 24px; }
+.summary dt { font-size: 13px; text-transform: none; letter-spacing: 0; }
+.summary dd { margin-top: 8px; font-weight: 600; }
+@media (max-width: 60rem) {
+ .hero { min-height: auto; padding-block: 48px; }
+ .hero h1 { font-size: clamp(40px, 5.5vw, 60px); }
+ .flow-steps { grid-template-columns: 1fr 1fr; }
+ .record-principles { gap: 24px; }
+ .role-option { padding: 32px; }
+}
+@media (max-width: 42rem) {
+ .app-header { padding-block: 16px; }
+ .header-actions { gap: 12px; }
+ .header-actions a { display: none; }
+ .header-actions button { font-size: 13px; padding: 10px 16px; }
+ .hero { grid-template-columns: 1fr; padding-block: 40px 32px; gap: 0; }
+ .hero h1 { font-size: clamp(40px, 9vw, 60px); max-width: 12ch; }
+ .hero-description { font-size: 16px; max-width: 36ch; }
+ .hero-art { margin-top: 16px; }
+ .hero-art img { max-height: 390px; }
+ .record-principles, .role-options, .prototype-section { grid-template-columns: 1fr; }
+ .record-principles { padding-block: 32px; gap: 24px; }
+ .record-principles p { max-width: 46ch; }
+ .section-heading { display: block; margin-bottom: 24px; }
+ .section-heading p { margin-top: 16px; }
+ .role-section, .steps-section { padding-block: 48px; }
+ .steps-section { padding-top: 0; }
+ .role-option { padding: 24px; }
+ .role-option p { min-height: 0; }
+ .flow-steps { gap: 24px; margin-top: 32px; }
+ .flow-steps li::before { margin-bottom: 16px; }
+ .prototype-section { padding: 24px; gap: 24px; margin-bottom: 40px; }
+ .site-footer { display: block; padding-block: 24px; }
+ .site-footer .hint { margin-top: 16px; }
+ .workspace-intro { display: block; margin-bottom: 32px; }
+ .workspace-intro span { display: block; margin-top: 8px; }
+ fieldset, .card, .notice { padding: 16px 20px 24px; }
+ .workspace-main h1 { font-size: 32px; }
+ .workspace-nav button { font-size: 13px; padding: 10px 14px; }
+}
+@media (max-width: 22rem) { :root { --pad: 1rem; } .brand-home { font-size: 18px; gap: 8px; } .flow-steps { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+.form-group + .form-group { border-top: 1px solid #e5e9ef; padding-top: 24px; margin-top: 24px; }
+.form-group h2 { font-size: 18px; font-weight: 600; }
+.signing-note { font-size: 14px; color: var(--muted); margin: 24px 0; line-height: 1.55; }
+.fee-summary { background: #f6f8fb; border: 0; }
+.remaining-balance dd { color: var(--accent-strong); font-size: 24px; letter-spacing: -.04em; }
+.remaining-balance dt { color: var(--accent-strong); }

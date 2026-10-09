@@ -99,7 +99,9 @@ export function CreateFeePage({ client, config, wallet }: PageProps) {
 
       <fieldset disabled={action.busy}>
         <legend>Fee details</legend>
-
+        <div className="form-group">
+        <h2>Asset and reference</h2>
+        <p className="hint">Use a testnet token and an opaque reference. These values become public on-chain.</p>
         <Field
           id="token"
           label="Token contract address"
@@ -128,6 +130,9 @@ export function CreateFeePage({ client, config, wallet }: PageProps) {
           error={fieldErrors.reference}
         />
 
+        </div>
+        <div className="form-group">
+        <h2>Amount and timing</h2>
         <Field
           id="total"
           label="Total owed"
@@ -151,6 +156,8 @@ export function CreateFeePage({ client, config, wallet }: PageProps) {
           error={fieldErrors.dueAt}
         />
 
+        </div>
+        <p className="signing-note">Review the token, reference and raw-unit amount before continuing. Your wallet will ask you to review and sign the transaction.</p>
         <button type="button" onClick={() => void submit()}>
           Create the fee
         </button>

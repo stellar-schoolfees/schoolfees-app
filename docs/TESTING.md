@@ -69,3 +69,13 @@ Keep pure logic beside its tests in `src/lib`. Use deferred promises for lifecyc
 regressions and the existing axe render harness for UI. Changes to `ERRORS.md`
 require updating the vendored table and checking both mapping directions. Never
 weaken network/privacy refusals or increase timeouts to mask a failing test.
+
+## October 9, 2026 landing and workspace redesign
+
+Local checks passed: lint, strict typecheck, all 168 tests across 26 files, and production build. Main JavaScript chunk: 804.47 kB (189.72 kB gzip); CSS: 14.81 kB (3.93 kB gzip). The existing 500 kB chunk warning remains. No dependency, wallet adapter, RPC client, network-validation or contract method was changed.
+
+Offline Chromium production fixtures passed 29 scenes at 320, 390, 768 and 1440px, plus a 1280px CSS 200% zoom simulation. Scenes cover landing, expanded disclosure, primary/secondary hover, disconnected payer entry, mocked-connected create, local validation errors, loaded payer and school records. No horizontal overflow or axe WCAG 2/2.1/2.2 violations was found. Rendered solid-background text contrast was at least 5.56:1 after transitions settled; disabled controls were excluded. All measured buttons and disclosures were at least 44px high. Decorative SVG gradients were inspected visually; they carry no text. Keyboard skip-link, page-change focus, no initial focus movement under StrictMode, and reduced-motion behavior passed.
+
+The connected address and fee state in these screenshots are injected mock fixtures, not a connected real wallet or on-chain result. Network requests were blocked outside the local fixture server. No transaction was signed or submitted. Native browser-toolbar zoom, real-device testing, screen readers, the wallet provider dialog and signed browser business flows remain unverified. Source snapshots, computed styles, before/after screenshots, diffs and machine-readable results are retained in the workspace submission packet; they are not evidence of an independent accessibility or security audit.
+
+Eleven additional synthetic CSS-class probes passed for error/confirmation notices, supporting text, nested code and all status tones (7.07:1–14.73:1). These are styling probes, not submitted transaction outcomes.

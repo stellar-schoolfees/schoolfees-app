@@ -1,5 +1,9 @@
 # Production quality — schoolfees app
 
+## October 9, 2026 current status
+
+The browser prototype is hosted at https://schoolfees-testnet.vercel.app, and the contract has a verified synthetic testnet demonstration. The redesigned working tree adds a public landing page and task workspace; publication of this new revision is a separate maintainer step. Signed browser business flows, a real pilot and independent audit remain unverified. Historical checklist statements below refer to the earlier audit, not current contract or hosting status.
+
 The polish checklist for the built site, with the current state of each item.
 Adapted from the Build Arsenal `PRODUCTION_QUALITY_TEMPLATE` and
 `SEO_TEMPLATE`.

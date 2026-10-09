@@ -20,7 +20,7 @@ export function FeeSummary({
   explorerBaseUrl: string;
 }) {
   return (
-    <section className="card" aria-labelledby="fee-summary-heading">
+    <section className="card fee-summary" aria-labelledby="fee-summary-heading">
       <h2 id="fee-summary-heading">
         Fee #{fee.id.toString()} <StatusBadge status={status} />
       </h2>
@@ -39,7 +39,7 @@ export function FeeSummary({
           <dt>Refunded</dt>
           <dd className="mono">{formatAmount(fee.refundedTotal)}</dd>
         </div>
-        <div>
+        <div className="remaining-balance">
           <dt>Still owed</dt>
           <dd className="mono">{formatAmount(remaining(fee))}</dd>
         </div>

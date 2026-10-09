@@ -1,5 +1,11 @@
 # Accessibility — schoolfees app
 
+## October 9, 2026 design verification
+
+The redesigned landing and workspace were checked in Chromium at 320, 390, 768 and 1440px. Local production fixtures had external requests blocked. Connected wallet/fee views are mock fixtures, not real-wallet evidence. Across 29 browser scenes: no horizontal overflow, no axe WCAG 2/2.1/2.2 A/AA violations, text contrast minimum 5.56:1 after transitions settle, and all measured buttons/disclosures at least 44px high. Keyboard skip/navigation focus and reduced-motion checks passed. Initial focus is unchanged; subsequent task navigation focuses main, including React StrictMode replay.
+
+A 1280px CSS `zoom:2` reflow simulation passed. This is not a native browser-toolbar zoom or a real-device audit. NVDA/VoiceOver and the actual wallet provider's dialog remain unverified. Original local decorative art has empty alternative text. The older sections below describe earlier audit findings; this dated record supersedes their page-navigation/imagery/reflow statements without claiming a human accessibility audit.
+
 The baseline this app targets and the honest state of each item. Adapted from
 the Build Arsenal `ACCESSIBILITY.md` and Flowtick §3 to this app.
 
